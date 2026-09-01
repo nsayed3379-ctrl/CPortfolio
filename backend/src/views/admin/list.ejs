@@ -1,0 +1,59 @@
+<%- include('partials/head') %>
+<div class="layout">
+  <%- include('partials/sidebar', { resourceKey: resourceKey }) %>
+  <div class="main">
+    <%- include('partials/topbar') %>
+    <div class="content">
+      <div class="btn-row" style="margin-bottom:16px;">
+        <% if (!def.private) { %>
+          <a class="btn" href="/admin/<%= resourceKey %>/new">+ New <%= def.singular %></a>
+        <% } else { %>
+          <span class="badge">Read-only inbox — update status/notes from the edit page</span>
+        <% } %>
+      </div>
+
+      <div class="card" style="padding:0;overflow:hidden;">
+        <table>
+          <thead>
+            <tr>
+              <% def.listColumns.forEach((col) => { %>
+                <th><%= col.replace(/_/g, ' ') %></th>
+              <% }) %>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (rows.length === 0) { %>
+              <tr><td colspan="<%= def.listColumns.length + 1 %>" style="color:var(--muted);">No records yet.</td></tr>
+            <% } %>
+            <% rows.forEach((row) => { %>
+              <tr>
+                <% def.listColumns.forEach((col) => { %>
+                  <td>
+                    <%
+                      let val = row[col];
+                      if (typeof val === 'boolean') { %>
+                        <span class="badge <%= val ? 'on' : '' %>"><%= val ? 'Yes' : 'No' %></span>
+                      <% } else if (val instanceof Date) { %>
+                        <%= val.toISOString().slice(0, 16).replace('T', ' ') %>
+                      <% } else if (val && typeof val === 'object') { %>
+                        <code style="font-size:11px;color:var(--muted);"><%= JSON.stringify(val).slice(0, 40) %>…</code>
+                      <% } else { %>
+                        <%= val === null || val === undefined || val === '' ? '—' : String(val).slice(0, 60) %>
+                      <% }
+                    %>
+                  </td>
+                <% }) %>
+                <td>
+                  <a href="/admin/<%= resourceKey %>/<%= row.id %>/edit">Edit</a>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

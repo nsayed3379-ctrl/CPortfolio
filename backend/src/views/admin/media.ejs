@@ -1,0 +1,39 @@
+<%- include('partials/head') %>
+<div class="layout">
+  <%- include('partials/sidebar', { isMedia: true }) %>
+  <div class="main">
+    <%- include('partials/topbar') %>
+    <div class="content">
+      <div class="card">
+        <p style="margin-top:0;color:var(--muted);">
+          Upload images here, then paste the resulting URL into any Image/JSON field
+          (e.g. a product's <code>images</code> field) elsewhere in the admin.
+        </p>
+        <form method="POST" action="/admin/media/upload" enctype="multipart/form-data" class="btn-row">
+          <input type="file" name="file" accept="image/*" required />
+          <button class="btn" type="submit">Upload</button>
+        </form>
+        <% if (uploaded) { %>
+          <div class="copy-box" style="margin-top:16px;">
+            Uploaded: <code id="uploadedUrl"><%= uploaded %></code>
+            <button class="btn secondary" type="button" onclick="navigator.clipboard.writeText(document.getElementById('uploadedUrl').textContent)">Copy</button>
+          </div>
+        <% } %>
+      </div>
+
+      <div class="card">
+        <strong>All uploads</strong>
+        <div class="upload-grid">
+          <% files.forEach((f) => { %>
+            <div class="upload-tile">
+              <img src="/uploads/<%= f %>" alt="<%= f %>" onerror="this.style.display='none'" />
+              <input type="text" readonly value="/uploads/<%= f %>" onclick="this.select()" />
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

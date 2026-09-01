@@ -1,0 +1,123 @@
+<%- include('partials/head') %>
+<div class="layout">
+  <%- include('partials/sidebar', { resourceKey: resourceKey }) %>
+  <div class="main">
+    <%- include('partials/topbar') %>
+    <div class="content">
+      <% if (error) { %>
+        <div class="error-banner"><%= error %></div>
+      <% } %>
+
+      <form method="POST" action="<%= item.id ? '/admin/' + resourceKey + '/' + item.id : '/admin/' + resourceKey %>" enctype="multipart/form-data">
+        <div class="card">
+          <div class="form-grid">
+            <% def.fields.forEach((f) => {
+                 const name = f.name;
+                 const label = f.label || name.replace(/_/g, ' ');
+                 const value = item[name];
+                 const readOnly = !!f.readOnly;
+            %>
+              <div class="field">
+                <label for="f_<%= name %>"><%= label %><% if (f.required) { %> *<% } %></label>
+
+                <% if (f.type === 'text' || f.type === 'slug') { %>
+                  <input type="text" id="f_<%= name %>" name="<%= name %>"
+                         value="<%= value === null || value === undefined ? '' : value %>"
+                         <%= readOnly ? 'readonly' : '' %> <%= f.required ? 'required' : '' %>
+                         placeholder="<%= f.type === 'slug' ? 'Leave blank to auto-generate from ' + def.slugSource : '' %>" />
+
+                <% } else if (f.type === 'textarea') { %>
+                  <textarea id="f_<%= name %>" name="<%= name %>" <%= readOnly ? 'readonly' : '' %> <%= f.required ? 'required' : '' %>><%= value === null || value === undefined ? '' : value %></textarea>
+
+                <% } else if (f.type === 'number') { %>
+                  <input type="number" id="f_<%= name %>" name="<%= name %>" value="<%= value === null || value === undefined ? '' : value %>" <%= f.required ? 'required' : '' %> />
+
+                <% } else if (f.type === 'date') { %>
+                  <input type="date" id="f_<%= name %>" name="<%= name %>"
+                         value="<%= value ? String(value).slice(0,10) : '' %>" <%= readOnly ? 'readonly' : '' %> />
+
+                <% } else if (f.type === 'boolean') { %>
+                  <div class="checkbox-row">
+                    <input type="checkbox" id="f_<%= name %>" name="<%= name %>" <%= value === true ? 'checked' : '' %> <%= readOnly ? 'disabled' : '' %> />
+                    <span style="color:var(--muted);font-size:13px;">On / off</span>
+                  </div>
+
+                <% } else if (f.type === 'select') { %>
+                  <select id="f_<%= name %>" name="<%= name %>" <%= readOnly ? 'disabled' : '' %> <%= f.required ? 'required' : '' %>>
+                    <% f.options.forEach((opt) => { %>
+                      <option value="<%= opt.value %>" <%= value === opt.value ? 'selected' : '' %>><%= opt.label %></option>
+                    <% }) %>
+                  </select>
+
+                <% } else if (f.type === 'array') { %>
+                  <textarea class="mono" id="f_<%= name %>" name="<%= name %>" <%= readOnly ? 'readonly' : '' %>><%= Array.isArray(value) ? value.join('\n') : (value || '') %></textarea>
+                  <div class="hint">One item per line.<% if (f.hint) { %> <%= f.hint %><% } %></div>
+
+                <% } else if (f.type === 'json') { %>
+                  <textarea class="mono" id="f_<%= name %>" name="<%= name %>" <%= readOnly ? 'readonly' : '' %>><%= value === undefined || value === null ? '' : (typeof value === 'string' ? value : JSON.stringify(value, null, 2)) %></textarea>
+                  <div class="hint">
+                    Structured JSON. Expected shape, e.g.:
+                    <br /><code><%= f.hint || '[]' %></code>
+                    — use the <a href="/admin/media" target="_blank">Media Library</a> to upload images and copy their URL in.
+                  </div>
+
+                <% } else if (f.type === 'image') { %>
+                  <% if (value) { %>
+                    <div style="margin-bottom:8px;">
+                      <img src="<%= value %>" alt="" style="max-width:160px;max-height:120px;border-radius:8px;border:1px solid var(--border);display:block;" />
+                    </div>
+                  <% } %>
+                  <input type="hidden" name="<%= name %>" value="<%= value || '' %>" />
+                  <input type="file" name="<%= name %>_file" accept="image/*" />
+                  <div class="hint">Upload a new file to replace the current image, or leave empty to keep it.</div>
+
+                <% } else if (f.type === 'cvfile') { %>
+                  <% if (value) { %>
+                    <a class="btn secondary" href="<%= value %>" target="_blank" rel="noopener">Download CV (<%= item.cv_filename || 'file' %>)</a>
+                  <% } else { %>
+                    <span class="hint">No CV on file.</span>
+                  <% } %>
+
+                <% } else if (f.type === 'reference') { %>
+                  <select id="f_<%= name %>" name="<%= name %>" <%= readOnly ? 'disabled' : '' %> <%= f.required ? 'required' : '' %>>
+                    <option value="">— none —</option>
+                    <% (refs[name] || []).forEach((opt) => { %>
+                      <option value="<%= opt.id %>" <%= String(value) === String(opt.id) ? 'selected' : '' %>><%= opt[f.refLabel] %></option>
+                    <% }) %>
+                  </select>
+
+                <% } else if (f.type === 'multiref') { %>
+                  <select id="f_<%= name %>" name="<%= name %>" multiple size="<%= Math.min(6, Math.max(3, (refs[name]||[]).length)) %>">
+                    <% const selectedIds = (Array.isArray(value) ? value : []).map(String); %>
+                    <% (refs[name] || []).forEach((opt) => { %>
+                      <option value="<%= opt.id %>" <%= selectedIds.includes(String(opt.id)) ? 'selected' : '' %>><%= opt[f.refLabel] %></option>
+                    <% }) %>
+                  </select>
+                  <div class="hint">Cmd/Ctrl-click to select multiple.</div>
+                <% } %>
+
+                <% if (f.hint && f.type !== 'array' && f.type !== 'json') { %>
+                  <div class="hint"><%= f.hint %></div>
+                <% } %>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" type="submit">Save</button>
+          <a class="btn secondary" href="/admin/<%= resourceKey %>">Cancel</a>
+        </div>
+      </form>
+
+      <% if (item.id && !def.private) { %>
+        <form method="POST" action="/admin/<%= resourceKey %>/<%= item.id %>/delete"
+              onsubmit="return confirm('Delete this <%= def.singular %>? This cannot be undone.');" style="margin-top:20px;">
+          <button class="btn danger" type="submit">Delete <%= def.singular %></button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</div>
+</body>
+</html>

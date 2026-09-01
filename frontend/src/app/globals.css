@@ -1,0 +1,166 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+@theme {
+  /* Color tokens — light, soft blue-gradient theme (a deliberate shift
+     from the earlier dark theme, inspired by a light Swiss/portfolio-style
+     reference: pastel blue-white wash, near-black text, a single
+     saturated blue accent doing the work color otherwise would). */
+  --color-ink: #eef3fb;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f4f8fd;
+  --color-border: #dbe6f3;
+  --color-border-hover: #c2d4ea;
+
+  --color-electric: #2e5eff;
+  --color-electric-soft: #3f6bff;
+  --color-cyan: #0891b2;
+
+  --color-paper: #0b1220;
+  --color-muted: #5b6b83;
+  --color-muted-2: #8494ab;
+
+  /* Fonts — system stack tuned to sit close to Geist/Inter's proportions.
+     Swap in next/font/local (self-hosted Geist) for pixel-perfect match
+     once font files are available in an environment with network access. */
+  --font-sans: -apple-system, "Segoe UI", ui-sans-serif, system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", ui-monospace, "Roboto Mono", Consolas, monospace;
+
+  /* Site-wide minimum readable text size: 16px. Tailwind's text-xs (12px)
+     and text-sm (14px) are redefined to match text-base here so every
+     existing usage (badges, captions, nav pills, footer text, etc.)
+     across the whole site becomes 16px automatically — no need to hunt
+     down and edit each className individually. text-lg and up are
+     already >=16px and untouched. */
+  --text-xs: 1rem;
+  --text-xs--line-height: 1.5rem;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5rem;
+}
+
+/* Soft, pastel-blue gradient wash behind the whole page — the light-theme
+   counterpart to the previous dark theme's flat near-black background.
+   Fixed so it doesn't visibly repeat/tile while scrolling a long page. */
+body {
+  background-color: var(--color-ink);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(76, 130, 255, 0.14), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(34, 211, 238, 0.10), transparent 55%),
+    linear-gradient(180deg, #f3f7fd 0%, #eef3fb 40%, #eaf1fb 100%);
+  background-attachment: fixed;
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scroll smoothing is now handled by Lenis (see
+   src/components/shared/SmoothScroll.tsx), which drives real momentum
+   physics via requestAnimationFrame — a meaningfully different feel from
+   the browser's built-in CSS `scroll-behavior: smooth` (which only
+   affects anchor-link jumps and does nothing for normal wheel/trackpad
+   scrolling). Deliberately NOT setting `scroll-behavior: smooth` here
+   anymore: running both at once causes the two smoothing systems to
+   fight each other, and was also the source of a Next.js console warning
+   about `data-scroll-behavior` during route transitions. Lenis itself
+   checks prefers-reduced-motion and skips initializing entirely when set
+   (see SmoothScroll.tsx), so native instant scrolling remains the
+   accessible fallback either way. */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Subtle circuit-grid background — dark, low-opacity lines on the new
+   light theme (previously white lines meant for a dark background). */
+.grid-field {
+  background-image:
+    linear-gradient(to right, rgba(11, 18, 32, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(11, 18, 32, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+}
+
+/* Noise texture overlay */
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Spotlight hover glow, driven by --x/--y set via JS */
+.spotlight {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(320px circle at var(--x, 50%) var(--y, 50%), rgba(46, 94, 255, 0.14), transparent 70%);
+  pointer-events: none;
+}
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+}
+
+::selection {
+  background: var(--color-electric);
+  color: white;
+}
+
+/* Single source of truth for keyboard-focus styling across every
+   interactive element (buttons, links, form fields, tabs, tiles) — so
+   focus treatment is visually identical site-wide instead of drifting
+   per component. Only shows on keyboard/assistive-tech focus, not on
+   mouse click, via :focus-visible. */
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 2px;
+  border-radius: inherit;
+}
+
+/* Route-level entrance used by app/template.tsx — a soft rise+fade so
+   navigating from a showcase tile into its detail page feels like a
+   continuation rather than a hard page reload. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-page-in {
+  animation: page-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-page-in {
+    animation: none;
+  }
+}

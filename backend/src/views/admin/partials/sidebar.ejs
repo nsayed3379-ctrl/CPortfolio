@@ -1,0 +1,28 @@
+<%
+  const publicKeys = Object.keys(resources).filter((k) => !resources[k].private);
+  const privateKeys = Object.keys(resources).filter((k) => resources[k].private);
+  const active = typeof resourceKey !== "undefined" ? resourceKey : null;
+%>
+<aside class="sidebar">
+  <div class="brand">Vicosoft Admin</div>
+  <div class="brand-sub">Node.js + PostgreSQL</div>
+
+  <a class="nav-link <%= active === null && typeof isDashboard !== 'undefined' ? 'active' : '' %>" href="/admin">Dashboard</a>
+  <a class="nav-link <%= typeof isSiteSettings !== 'undefined' ? 'active' : '' %>" href="/admin/site-settings">Site Settings</a>
+  <a class="nav-link <%= typeof isMedia !== 'undefined' ? 'active' : '' %>" href="/admin/media">Media Library</a>
+
+  <div class="nav-group-title">Content</div>
+  <% publicKeys.forEach((key) => { %>
+    <a class="nav-link <%= active === key ? 'active' : '' %>" href="/admin/<%= key %>"><%= resources[key].label %></a>
+  <% }) %>
+
+  <div class="nav-group-title">Inbox</div>
+  <% privateKeys.forEach((key) => { %>
+    <a class="nav-link <%= active === key ? 'active' : '' %>" href="/admin/<%= key %>"><%= resources[key].label %></a>
+  <% }) %>
+
+  <div class="nav-group-title">Account</div>
+  <form method="POST" action="/admin/logout">
+    <button type="submit" class="nav-link" style="width:100%;text-align:left;background:none;border:none;cursor:pointer;font:inherit;">Log out</button>
+  </form>
+</aside>

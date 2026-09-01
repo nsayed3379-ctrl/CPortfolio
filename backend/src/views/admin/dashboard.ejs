@@ -1,0 +1,24 @@
+<%- include('partials/head') %>
+<div class="layout">
+  <%- include('partials/sidebar', { isDashboard: true }) %>
+  <div class="main">
+    <%- include('partials/topbar') %>
+    <div class="content">
+      <div class="card">
+        <p style="margin:0;color:var(--muted);">
+          Content and record counts across every table. Click a card, or use the sidebar, to manage records.
+        </p>
+      </div>
+      <div class="stat-grid">
+        <% Object.keys(resources).forEach((key) => { %>
+          <a class="stat-card" href="/admin/<%= key %>" style="display:block;">
+            <div class="n"><%= counts[key] %></div>
+            <div class="label"><%= resources[key].label %><%= resources[key].private ? ' (inbox)' : '' %></div>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<%- include('partials/head') %>
+<div class="layout">
+  <%- include('partials/sidebar', { isSiteSettings: true }) %>
+  <div class="main">
+    <%- include('partials/topbar') %>
+    <div class="content">
+      <% if (error) { %><div class="error-banner"><%= error %></div><% } %>
+      <form method="POST" action="/admin/site-settings">
+        <div class="card">
+          <div class="form-grid">
+            <div class="field">
+              <label>Company name</label>
+              <input type="text" name="company_name" value="<%= settings.company_name || '' %>" />
+            </div>
+            <div class="field">
+              <label>Tagline</label>
+              <input type="text" name="tagline" value="<%= settings.tagline || '' %>" />
+              <div class="hint">Used in the footer and as the Hero/CTA/Footer text-scramble bookend.</div>
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="text" name="email" value="<%= settings.email || '' %>" />
+            </div>
+            <div class="field">
+              <label>Location</label>
+              <input type="text" name="location" value="<%= settings.location || '' %>" />
+            </div>
+            <div class="field">
+              <label>Social links (JSON)</label>
+              <textarea class="mono" name="social_links"><%= JSON.stringify(settings.social_links || {}, null, 2) %></textarea>
+              <div class="hint">Shape: {"linkedin":"...", "github":"...", "facebook":"...", "x":"..."}</div>
+            </div>
+            <div class="field">
+              <label>Capability signal strip</label>
+              <textarea class="mono" name="capabilities"><%= (settings.capabilities || []).join('\n') %></textarea>
+              <div class="hint">One item per line — the scrolling marquee under the hero (e.g. Software, AI, Automation, Cloud).</div>
+            </div>
+            <div class="field">
+              <label>Trust commitments (JSON)</label>
+              <textarea class="mono" name="commitments"><%= JSON.stringify(settings.commitments || [], null, 2) %></textarea>
+              <div class="hint">Shape: [{"title":"...", "description":"..."}]</div>
+            </div>
+            <div class="field">
+              <label>Why Vicosoft (JSON)</label>
+              <textarea class="mono" name="why_vicosoft"><%= JSON.stringify(settings.why_vicosoft || [], null, 2) %></textarea>
+              <div class="hint">Shape: [{"title":"...", "description":"..."}]</div>
+            </div>
+            <div class="field">
+              <label>Technology stack, grouped (JSON)</label>
+              <textarea class="mono" name="tech_stack_groups"><%= JSON.stringify(settings.tech_stack_groups || [], null, 2) %></textarea>
+              <div class="hint">Shape: [{"group":"Backend", "items":["Node.js","PostgreSQL"]}]</div>
+            </div>
+            <div class="field">
+              <label>How we work (JSON)</label>
+              <textarea class="mono" name="how_we_work"><%= JSON.stringify(settings.how_we_work || [], null, 2) %></textarea>
+              <div class="hint">Shape: [{"title":"...", "description":"...", "checkpoint":"..."}]</div>
+            </div>
+            <div class="field">
+              <label>Default SEO (JSON)</label>
+              <textarea class="mono" name="seo"><%= JSON.stringify(settings.seo || {}, null, 2) %></textarea>
+              <div class="hint">Shape: {"title":"...", "description":"...", "ogImageUrl":"/uploads/..."} — upload the OG image via the Media Library first.</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn" type="submit">Save Settings</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
