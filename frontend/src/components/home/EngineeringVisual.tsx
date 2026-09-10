@@ -1,8 +1,9 @@
 // One fixed, hand-built illustration for the "What we do" carousel's side
-// panel — a small team collaborating around a shared board, drawn as flat
-// geometric figures on a deep navy panel in the site's electric/cyan
-// palette. Pure SVG + CSS: no state, no image request, no library. The
-// board and accents drift slowly; motion stops under prefers-reduced-motion.
+// panel: a small team standing together with a cluster of tech motifs
+// around them — an "AI" chip, a chat-bot bubble, gears, a message bubble —
+// in the site's blue / cyan palette on a deep-navy panel. Pure SVG + CSS:
+// no state, no image request, no library. Accents drift slowly; motion
+// stops entirely under prefers-reduced-motion.
 export default function EngineeringVisual() {
   return (
     <div className="relative h-full min-h-[240px] w-full overflow-hidden sm:min-h-[320px] lg:min-h-[460px]">
@@ -11,7 +12,7 @@ export default function EngineeringVisual() {
         preserveAspectRatio="xMidYMid slice"
         className="h-full w-full"
         role="img"
-        aria-label="Illustration of a small team collaborating around a shared board"
+        aria-label="Illustration of a team surrounded by AI, chatbot and automation motifs"
       >
         <defs>
           <linearGradient id="ev-panel" x1="0" y1="0" x2="1" y2="1">
@@ -19,9 +20,13 @@ export default function EngineeringVisual() {
             <stop offset="55%" stopColor="#0a1024" />
             <stop offset="100%" stopColor="#05070f" />
           </linearGradient>
-          <linearGradient id="ev-glass" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.10" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.02" />
+          <linearGradient id="ev-jacket" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#4d74ff" />
+            <stop offset="100%" stopColor="#2647c9" />
+          </linearGradient>
+          <linearGradient id="ev-cyan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#22d3ee" />
+            <stop offset="100%" stopColor="#0e7d97" />
           </linearGradient>
           <radialGradient id="ev-glow-a" cx="50%" cy="50%" r="50%">
             <stop offset="0%" stopColor="#2e5eff" stopOpacity="0.55" />
@@ -42,100 +47,108 @@ export default function EngineeringVisual() {
         <circle cx="130" cy="90" r="230" fill="url(#ev-glow-a)" />
         <circle cx="560" cy="470" r="250" fill="url(#ev-glow-b)" />
 
-        {/* collaboration ring behind the group */}
-        <circle
-          cx="320"
-          cy="300"
-          r="210"
-          fill="none"
-          stroke="#3f6bff"
-          strokeOpacity="0.28"
-          strokeWidth="1.5"
-          strokeDasharray="2 9"
-          className="ev-drift"
-        />
-
-        {/* dashed links between the three heads — the "connected team" motif */}
-        <g stroke="#22d3ee" strokeOpacity="0.5" strokeWidth="1.6" strokeDasharray="2 7" strokeLinecap="round" className="ev-drift">
-          <line x1="150" y1="196" x2="410" y2="150" />
-          <line x1="410" y1="150" x2="512" y2="205" />
-          <line x1="150" y1="196" x2="512" y2="205" />
-        </g>
-        {[
-          [150, 196],
-          [410, 150],
-          [512, 205],
-        ].map(([x, y], i) => (
-          <circle key={i} cx={x} cy={y} r="3.5" fill="#22d3ee" className="ev-drift" />
-        ))}
-
-        {/* shared board */}
-        <g className="ev-float">
-          <rect x="236" y="196" width="222" height="150" rx="14" fill="#0c1226" stroke="#ffffff" strokeOpacity="0.14" />
-          <rect x="236" y="196" width="222" height="150" rx="14" fill="url(#ev-glass)" />
-          <circle cx="252" cy="212" r="3.5" fill="#ffffff" fillOpacity="0.25" />
-          <circle cx="264" cy="212" r="3.5" fill="#ffffff" fillOpacity="0.25" />
-          <circle cx="276" cy="212" r="3.5" fill="#ffffff" fillOpacity="0.25" />
-          {/* checklist rows */}
-          {[0, 1, 2].map((i) => (
-            <g key={i} transform={`translate(256 ${244 + i * 30})`}>
-              <rect width="16" height="16" rx="5" fill="none" stroke="#22d3ee" strokeOpacity="0.7" />
-              <path d="M4 8 l3.5 3.5 l6 -7" fill="none" stroke="#22d3ee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              <rect x="28" y="4" width={i === 1 ? 120 : 150} height="8" rx="4" fill="#ffffff" fillOpacity={i === 2 ? 0.1 : 0.18} />
+        {/* ── tech-motif cluster ── */}
+        {/* AI chip */}
+        <g className="ev-float-slow">
+          <rect x="286" y="70" width="92" height="92" rx="14" fill="#0c1226" stroke="#3f6bff" strokeOpacity="0.7" strokeWidth="2" />
+          {[24, 46, 68].map((d) => (
+            <g key={d} stroke="#3f6bff" strokeOpacity="0.7" strokeWidth="2" strokeLinecap="round">
+              <line x1={286 + d} y1="58" x2={286 + d} y2="70" />
+              <line x1={286 + d} y1="162" x2={286 + d} y2="174" />
+              <line x1="274" y1={70 + d} x2="286" y2={70 + d} />
+              <line x1="378" y1={70 + d} x2="390" y2={70 + d} />
             </g>
           ))}
-          {/* progress bar */}
-          <rect x="256" y="320" width="182" height="8" rx="4" fill="#ffffff" fillOpacity="0.08" />
-          <rect x="256" y="320" width="120" height="8" rx="4" fill="#2e5eff" />
+          <text x="332" y="126" textAnchor="middle" fontSize="30" fontWeight="700" letterSpacing="0.06em" fill="#6f8bff">AI</text>
         </g>
 
-        {/* speech bubble from the presenter */}
+        {/* chat-bot bubble */}
+        <g className="ev-float">
+          <path d="M470 96 h96 a16 16 0 0 1 16 16 v56 a16 16 0 0 1 -16 16 h-58 l-18 18 v-18 h-20 a16 16 0 0 1 -16 -16 v-56 a16 16 0 0 1 16 -16 z" fill="url(#ev-jacket)" />
+          <line x1="518" y1="86" x2="518" y2="96" stroke="#6f8bff" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="518" cy="82" r="4" fill="#6f8bff" />
+          <circle cx="504" cy="134" r="6" fill="#eaf0ff" />
+          <circle cx="532" cy="134" r="6" fill="#eaf0ff" />
+          <path d="M504 152 q14 12 28 0" fill="none" stroke="#eaf0ff" strokeWidth="3" strokeLinecap="round" />
+        </g>
+
+        {/* gears */}
+        <g className="ev-spin" style={{ transformOrigin: "560px 60px" }}>
+          <path d="M560 40 l6 3 7 -3 3 7 7 3 -1 7 5 5 -5 5 1 7 -7 3 -3 7 -7 -3 -6 3 -3 -7 -7 -3 1 -7 -5 -5 5 -5 -1 -7 7 -3 z" fill="none" stroke="#22d3ee" strokeOpacity="0.8" strokeWidth="3" strokeLinejoin="round" />
+          <circle cx="560" cy="60" r="7" fill="none" stroke="#22d3ee" strokeOpacity="0.8" strokeWidth="3" />
+        </g>
+        <g className="ev-spin-rev" style={{ transformOrigin: "598px 96px" }}>
+          <path d="M598 82 l4 2 5 -2 2 5 5 2 -1 5 3 3 -3 3 1 5 -5 2 -2 5 -5 -2 -4 2 -2 -5 -5 -2 1 -5 -3 -3 3 -3 -1 -5 5 -2 z" fill="none" stroke="#3f6bff" strokeOpacity="0.75" strokeWidth="2.5" strokeLinejoin="round" />
+        </g>
+
+        {/* message bubble + hollow ring */}
         <g className="ev-float-slow">
-          <rect x="120" y="120" width="86" height="40" rx="12" fill="#0b1533" stroke="#3f6bff" strokeOpacity="0.5" />
-          <path d="M150 158 l6 12 l12 -10 z" fill="#0b1533" stroke="#3f6bff" strokeOpacity="0.5" />
-          <rect x="134" y="132" width="46" height="7" rx="3.5" fill="#4d74ff" fillOpacity="0.8" />
-          <rect x="134" y="144" width="30" height="6" rx="3" fill="#ffffff" fillOpacity="0.14" />
+          <path d="M494 214 h58 a12 12 0 0 1 12 12 v30 a12 12 0 0 1 -12 12 h-40 l-12 12 v-12 h-6 a12 12 0 0 1 -12 -12 v-30 a12 12 0 0 1 12 -12 z" fill="none" stroke="#22d3ee" strokeOpacity="0.7" strokeWidth="2.5" />
+          {[512, 524, 536].map((cx) => (
+            <circle key={cx} cx={cx} cy="242" r="3" fill="#22d3ee" fillOpacity="0.85" />
+          ))}
+        </g>
+        <circle cx="470" cy="248" r="14" fill="none" stroke="#3f6bff" strokeOpacity="0.6" strokeWidth="3" className="ev-drift" />
+
+        {/* faint connecting dashes chip → people */}
+        <g stroke="#3f6bff" strokeOpacity="0.35" strokeWidth="1.5" strokeDasharray="2 8" strokeLinecap="round">
+          <path d="M300 160 q-40 60 -70 110" />
+          <path d="M360 160 q20 50 40 90" />
         </g>
 
-        {/* ── team figures ── */}
-        {/* A — presenter, left, arm raised toward the board */}
+        {/* ── team ── (feet ~ y 430) */}
+        {/* P1 — hands on hips */}
         <g>
-          <line x1="150" y1="286" x2="212" y2="250" stroke="#3f6bff" strokeWidth="10" strokeLinecap="round" />
-          <path d="M124 360 q0 -74 26 -74 q26 0 26 74 z" fill="#3f6bff" />
-          <circle cx="150" cy="214" r="20" fill="#d7defb" />
-          <rect x="136" y="360" width="12" height="46" rx="6" fill="#1c274f" />
-          <rect x="152" y="360" width="12" height="46" rx="6" fill="#1c274f" />
+          <ellipse cx="128" cy="432" rx="46" ry="10" fill="#05070f" fillOpacity="0.5" />
+          <rect x="116" y="392" width="12" height="42" rx="6" fill="#1c274f" />
+          <rect x="130" y="392" width="12" height="42" rx="6" fill="#1c274f" />
+          <path d="M100 396 q0 -84 28 -84 q28 0 28 84 z" fill="url(#ev-cyan)" />
+          <path d="M104 352 q-16 6 -14 30 M152 352 q16 6 14 30" fill="none" stroke="url(#ev-cyan)" strokeWidth="11" strokeLinecap="round" />
+          <circle cx="128" cy="292" r="19" fill="#ecdcc9" />
+          <path d="M109 288 q2 -26 19 -26 q17 0 19 26 q-8 -12 -19 -12 q-11 0 -19 12 z" fill="#16213f" />
         </g>
 
-        {/* B — centre-right, holding a laptop */}
+        {/* P2 — holding a laptop */}
         <g>
-          <path d="M384 372 q0 -78 28 -78 q28 0 28 78 z" fill="#2e5eff" />
-          <circle cx="412" cy="150" r="21" fill="#e3e8fb" />
-          <rect x="396" y="372" width="13" height="48" rx="6.5" fill="#1c274f" />
-          <rect x="414" y="372" width="13" height="48" rx="6.5" fill="#1c274f" />
-          {/* laptop */}
-          <rect x="388" y="330" width="52" height="34" rx="4" fill="#0b1533" stroke="#22d3ee" strokeOpacity="0.55" />
-          <rect x="382" y="364" width="64" height="6" rx="3" fill="#334066" />
+          <ellipse cx="236" cy="434" rx="48" ry="10" fill="#05070f" fillOpacity="0.5" />
+          <rect x="224" y="392" width="12" height="44" rx="6" fill="#1c274f" />
+          <rect x="238" y="392" width="12" height="44" rx="6" fill="#1c274f" />
+          <path d="M206 398 q0 -86 30 -86 q30 0 30 86 z" fill="#e8ecfb" />
+          <rect x="212" y="360" width="48" height="30" rx="4" fill="#0b1533" stroke="#22d3ee" strokeOpacity="0.55" />
+          <rect x="206" y="388" width="60" height="6" rx="3" fill="#334066" />
+          <circle cx="236" cy="288" r="19" fill="#ecdcc9" />
+          <path d="M217 286 q0 -28 19 -28 q19 0 19 28 q-6 -10 -19 -10 q-13 0 -19 10 z" fill="#1f2b52" />
         </g>
 
-        {/* C — right */}
+        {/* P3 — presenting, arms open */}
         <g>
-          <path d="M486 366 q0 -74 26 -74 q26 0 26 74 z" fill="#0891b2" />
-          <circle cx="512" cy="224" r="19" fill="#d7defb" />
-          <rect x="498" y="366" width="12" height="46" rx="6" fill="#1c274f" />
-          <rect x="514" y="366" width="12" height="46" rx="6" fill="#1c274f" />
+          <ellipse cx="342" cy="436" rx="52" ry="11" fill="#05070f" fillOpacity="0.5" />
+          <rect x="330" y="392" width="13" height="46" rx="6.5" fill="#1c274f" />
+          <rect x="345" y="392" width="13" height="46" rx="6.5" fill="#1c274f" />
+          {/* skirt/dress shape */}
+          <path d="M312 400 l14 -78 h30 l14 78 z" fill="url(#ev-jacket)" />
+          <path d="M326 322 q16 -8 30 0" fill="none" stroke="#e8ecfb" strokeWidth="10" strokeLinecap="round" />
+          <path d="M326 322 q-20 10 -26 40 M356 322 q20 10 26 40" fill="none" stroke="#e8ecfb" strokeWidth="10" strokeLinecap="round" />
+          <circle cx="341" cy="300" r="19" fill="#ecdcc9" />
+          <path d="M322 302 q0 -30 19 -30 q19 0 19 30 q0 8 -4 14 q2 -18 -15 -18 q-17 0 -15 18 q-4 -6 -4 -14 z" fill="#16213f" />
         </g>
 
-        {/* ground shadow */}
-        <ellipse cx="330" cy="418" rx="230" ry="20" fill="#05070f" fillOpacity="0.55" />
-
-        {/* floating code glyph + plus nodes */}
-        <g className="ev-float-slow" fill="none" stroke="#4d74ff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" opacity="0.8">
-          <path d="M120 72 l-16 14 l16 14" />
-          <path d="M150 72 l16 14 l-16 14" />
+        {/* P4 — hand raised */}
+        <g>
+          <ellipse cx="446" cy="434" rx="46" ry="10" fill="#05070f" fillOpacity="0.5" />
+          <rect x="434" y="392" width="12" height="44" rx="6" fill="#1c274f" />
+          <rect x="448" y="392" width="12" height="44" rx="6" fill="#1c274f" />
+          <path d="M424 398 q0 -84 22 -84 q22 0 22 84 z" fill="url(#ev-cyan)" />
+          <path d="M430 356 q-18 -4 -20 -34" fill="none" stroke="url(#ev-cyan)" strokeWidth="10" strokeLinecap="round" />
+          <path d="M462 356 q16 6 14 30" fill="none" stroke="url(#ev-cyan)" strokeWidth="10" strokeLinecap="round" />
+          <circle cx="446" cy="294" r="18" fill="#ecdcc9" />
+          <path d="M428 292 q1 -25 18 -25 q17 0 18 25 q-7 -11 -18 -11 q-11 0 -18 11 z" fill="#1f2b52" />
         </g>
+
+        {/* small plus accents */}
         <g stroke="#22d3ee" strokeWidth="2.4" strokeLinecap="round" opacity="0.7" className="ev-drift">
-          <path d="M560 300 h18 M569 291 v18" />
+          <path d="M92 150 h16 M100 142 v16" />
+          <path d="M556 300 h16 M564 292 v16" />
         </g>
       </svg>
 
@@ -143,10 +156,13 @@ export default function EngineeringVisual() {
         .ev-float { animation: ev-float 7s ease-in-out infinite; }
         .ev-float-slow { animation: ev-float 10s ease-in-out infinite; }
         .ev-drift { animation: ev-drift 12s ease-in-out infinite; }
+        .ev-spin { animation: ev-spin 22s linear infinite; }
+        .ev-spin-rev { animation: ev-spin 18s linear infinite reverse; }
         @keyframes ev-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
         @keyframes ev-drift { 0%,100% { transform: translate(0,0); } 50% { transform: translate(6px,-8px); } }
+        @keyframes ev-spin { to { transform: rotate(360deg); } }
         @media (prefers-reduced-motion: reduce) {
-          .ev-float, .ev-float-slow, .ev-drift { animation: none; }
+          .ev-float, .ev-float-slow, .ev-drift, .ev-spin, .ev-spin-rev { animation: none; }
         }
       `}</style>
     </div>
