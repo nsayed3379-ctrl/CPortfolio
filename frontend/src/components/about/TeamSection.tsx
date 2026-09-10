@@ -42,14 +42,15 @@ function TeamRow({ member, index }: { member: TeamMemberDoc; index: number }) {
     <div
       ref={ref}
       className={cn(
-        "grid grid-cols-1 items-center gap-10 py-14 first:pt-0 last:pb-0 sm:gap-14 lg:grid-cols-2",
+        "flex flex-col items-center gap-6 py-12 text-center first:pt-0 last:pb-0",
+        "sm:flex-row sm:items-center sm:gap-10 sm:text-left",
+        reversed && "sm:flex-row-reverse",
         "border-b border-[var(--color-border)] last:border-b-0"
       )}
     >
       <div
         className={cn(
-          "transition-all duration-[900ms] ease-out motion-reduce:transition-none",
-          reversed && "lg:order-2",
+          "shrink-0 transition-all duration-[900ms] ease-out motion-reduce:transition-none",
           visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         )}
       >
@@ -60,14 +61,13 @@ function TeamRow({ member, index }: { member: TeamMemberDoc; index: number }) {
             variant: "orbs",
             imageUrl: member.photoUrl,
           }}
-          className="aspect-[4/5] w-full rounded-3xl border border-[var(--color-border)] transition-transform duration-500 ease-out hover:scale-[1.015]"
+          className="h-36 w-36 rounded-full border border-[var(--color-border)] transition-transform duration-500 ease-out hover:scale-[1.03] sm:h-52 sm:w-52"
         />
       </div>
 
       <div
         className={cn(
-          "transition-all duration-[900ms] ease-out motion-reduce:transition-none",
-          reversed && "lg:order-1",
+          "min-w-0 flex-1 transition-all duration-[900ms] ease-out motion-reduce:transition-none",
           visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         )}
         style={{ transitionDelay: visible ? "150ms" : "0ms" }}
@@ -83,7 +83,7 @@ function TeamRow({ member, index }: { member: TeamMemberDoc; index: number }) {
           text={member.quote}
           triggerOnView
           staggerMs={12}
-          className="mt-5 max-w-lg text-base leading-relaxed text-[var(--color-muted)]"
+          className="mx-auto mt-5 max-w-lg text-base leading-relaxed text-[var(--color-muted)] sm:mx-0"
         />
         {member.linkedin && (
           <a

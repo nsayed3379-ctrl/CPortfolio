@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import Container from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
+import TechChip from "@/components/ui/TechChip";
 import { sanityFetch } from "@/sanity/fetch";
 import { SERVICE_BY_SLUG_QUERY } from "@/sanity/queries";
 import { fallbackServiceBySlug } from "@/sanity/fallbacks";
 import type { ServiceDoc } from "@/sanity/types";
-import { Check, ChevronRight } from "lucide-react";
+import { Check } from "lucide-react";
 
 // No generateStaticParams here on purpose: with content now living in
 // Sanity, the site shouldn't need a full rebuild every time a service is
@@ -63,16 +63,6 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
           <h1 className="mx-auto max-w-3xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
             {service.name}
           </h1>
-          <nav
-            aria-label="Breadcrumb"
-            className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-cyan)] px-5 py-2.5 text-base font-medium text-white"
-          >
-            <Link href="/" className="hover:opacity-80">Home</Link>
-            <ChevronRight className="h-4 w-4 opacity-80" />
-            <Link href="/services" className="hover:opacity-80">Services</Link>
-            <ChevronRight className="h-4 w-4 opacity-80" />
-            <span className="opacity-90">{service.name}</span>
-          </nav>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-[var(--color-muted)]">
             {service.shortDescription}
           </p>
@@ -145,14 +135,16 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <section className="border-t border-[var(--color-border)] py-20">
         <Container className="grid gap-12 lg:grid-cols-2">
           <div>
-            <div className="mt-6 flex flex-wrap gap-2">
+            <Badge>Technology stack</Badge>
+            <div className="mt-6 flex flex-wrap gap-2.5">
               {technologies.map((t) => (
-                <Badge key={t}>{t}</Badge>
+                <TechChip key={t} name={t} />
               ))}
             </div>
           </div>
           <div>
-            <ul className="mt-6 space-y-3">
+            <Badge>What you get</Badge>
+            <ul className="mt-6 space-y-4">
               {deliverables.map((d) => (
                 <li key={d} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-cyan)]" />

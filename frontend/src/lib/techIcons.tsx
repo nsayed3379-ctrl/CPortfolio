@@ -1,29 +1,46 @@
 import type { ComponentType, SVGProps } from "react";
 import {
+  SiApachekafka,
+  SiCelery,
+  SiClaude,
   SiDigitalocean,
   SiDjango,
   SiDocker,
   SiFastapi,
   SiFigma,
   SiFlutter,
+  SiGooglegemini,
+  SiGraphql,
   SiKotlin,
   SiKubernetes,
   SiLaravel,
   SiNextdotjs,
   SiNodedotjs,
+  SiPostgresql,
   SiPytorch,
   SiPython,
   SiReact,
+  SiRedis,
   SiScikitlearn,
   SiSpringboot,
   SiSwift,
   SiTailwindcss,
   SiTypescript,
 } from "react-icons/si";
-// AWS has no mark in Simple Icons (Amazon had it pulled for trademark
-// reasons), so that one badge borrows Font Awesome's logo instead.
-import { FaAws } from "react-icons/fa6";
-import { Frame, LayoutGrid, Layers, Network, Palette } from "lucide-react";
+// AWS and Java have no mark in Simple Icons (trademark reasons), so those
+// borrow Font Awesome's logos instead.
+import { FaAws, FaJava } from "react-icons/fa6";
+import {
+  Bot,
+  Database,
+  Frame,
+  LayoutGrid,
+  Layers,
+  Network,
+  Palette,
+  Sparkles,
+  Webhook,
+} from "lucide-react";
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
 
@@ -43,12 +60,20 @@ export const TECH_ICONS: Record<string, { Icon: IconComponent; color: string }> 
   "REST APIs": { Icon: Network, color: "#2e5eff" },
   "Spring Boot": { Icon: SiSpringboot, color: "#6DB33F" },
   "PHP Laravel": { Icon: SiLaravel, color: "#FF2D20" },
+  "Java": { Icon: FaJava, color: "#EA2D2E" },
+  "GraphQL": { Icon: SiGraphql, color: "#E10098" },
+  "Webhooks": { Icon: Webhook, color: "#2e5eff" },
 
   "Python": { Icon: SiPython, color: "#3776AB" },
   "PyTorch": { Icon: SiPytorch, color: "#EE4C2C" },
   "scikit-learn Machine Learning": { Icon: SiScikitlearn, color: "#F7931E" },
   "Natural Language Processing": { Icon: Layers, color: "#0891b2" },
   "Deep Learning": { Icon: Layers, color: "#3f6bff" },
+  "OpenAI": { Icon: Sparkles, color: "#10A37F" },
+  "Claude": { Icon: SiClaude, color: "#D97757" },
+  "Gemini": { Icon: SiGooglegemini, color: "#886FBF" },
+  "RAG": { Icon: Database, color: "#0891b2" },
+  "LLMs": { Icon: Bot, color: "#3f6bff" },
 
   "React Native": { Icon: SiReact, color: "#61DAFB" },
   "Flutter": { Icon: SiFlutter, color: "#02569B" },
@@ -59,6 +84,10 @@ export const TECH_ICONS: Record<string, { Icon: IconComponent; color: string }> 
   "AWS": { Icon: FaAws, color: "#FF9900" },
   "DigitalOcean": { Icon: SiDigitalocean, color: "#0080FF" },
   "Kubernetes": { Icon: SiKubernetes, color: "#326CE5" },
+  "PostgreSQL": { Icon: SiPostgresql, color: "#4169E1" },
+  "Redis": { Icon: SiRedis, color: "#FF4438" },
+  "Celery": { Icon: SiCelery, color: "#37814A" },
+  "Kafka": { Icon: SiApachekafka, color: "#231F20" },
 
   "Figma": { Icon: SiFigma, color: "#F24E1E" },
   "UI/UX Design": { Icon: Palette, color: "#2e5eff" },
