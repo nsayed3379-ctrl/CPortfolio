@@ -15,7 +15,7 @@ export default async function ContactPage() {
 
   return (
     <div>
-      <section className="py-24">
+      <section className="py-16 sm:py-24">
         <Container className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <h1 className="mt-4 max-w-md text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">

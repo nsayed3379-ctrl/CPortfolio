@@ -12,11 +12,11 @@ export default function WhatWeDo() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           title="Engineering, applied across the full stack."
-          className="mb-12"
+          className="mb-8 sm:mb-12"
         />
 
         <div className="border-t border-[var(--color-border)]">
@@ -34,34 +34,36 @@ export default function WhatWeDo() {
               >
                 <div
                   className={cn(
-                    "flex flex-col gap-3 py-6 transition-colors duration-200 sm:flex-row sm:items-center sm:justify-between sm:gap-6",
+                    "flex items-center justify-between gap-4 py-5 transition-colors duration-200 sm:gap-6 sm:py-6",
                     isActive && "sm:py-8"
                   )}
                 >
-                  <div className="flex items-start gap-5 sm:items-center">
+                  <div className="flex min-w-0 items-center gap-4 sm:gap-5">
                     <span
-                      className="pt-1 text-sm text-[var(--color-electric-soft)] sm:pt-0"
+                      className="shrink-0 text-xs text-[var(--color-electric-soft)] sm:text-sm"
                       style={{ fontFamily: "var(--font-mono)" }}
                     >
                       {row.index}
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <h3
                         className={cn(
-                          "text-xl font-medium text-[var(--color-paper)] transition-colors sm:text-2xl",
+                          "truncate text-lg font-medium text-[var(--color-paper)] transition-colors sm:overflow-visible sm:whitespace-normal sm:text-2xl",
                           isActive && "text-[var(--color-cyan)]"
                         )}
                       >
                         {row.title}
                       </h3>
-                      <p className="mt-1 text-sm text-[var(--color-muted-2)]">{row.tags.join(" · ")}</p>
+                      <p className="mt-1 truncate text-xs text-[var(--color-muted-2)] sm:overflow-visible sm:whitespace-normal sm:text-sm">
+                        {row.tags.join(" · ")}
+                      </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 pl-9 sm:pl-0">
+                  <div className="flex shrink-0 items-center gap-4">
                     <div
                       className={cn(
-                        "grid max-w-sm overflow-hidden transition-all duration-300 ease-out",
+                        "hidden max-w-sm overflow-hidden transition-all duration-300 ease-out sm:grid",
                         isActive ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0 sm:max-w-0"
                       )}
                     >

@@ -22,7 +22,7 @@ export default async function LabsPreview() {
   }));
 
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-24">
       <Container>
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeading

@@ -72,7 +72,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* The Problem */}
-      <section className="py-24 sm:py-32">
+      <section className="py-16 sm:py-32">
         <Container className="mx-auto max-w-3xl text-center">
           <p className="text-balance mt-6 text-2xl font-medium leading-snug text-[var(--color-paper)] sm:text-4xl">
             {product.problem}
@@ -81,7 +81,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* The Idea */}
-      <section className="bg-[var(--color-surface)] py-24 sm:py-32">
+      <section className="bg-[var(--color-surface)] py-16 sm:py-32">
         <Container className="mx-auto max-w-3xl text-center">
           <p className="text-balance mt-6 text-2xl font-medium leading-snug text-[var(--color-cyan)] sm:text-4xl">
             {product.idea}
@@ -90,7 +90,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* How It Works */}
-      <section className="py-24 sm:py-32">
+      <section className="py-16 sm:py-32">
         <Container>
           <div className="relative mt-12">
             <div
@@ -125,7 +125,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* Key Features */}
-      <section className="bg-[var(--color-surface)] py-24 sm:py-32">
+      <section className="bg-[var(--color-surface)] py-16 sm:py-32">
         <Container>
           <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-border)] sm:grid-cols-3">
             {features.map((f) => (
@@ -141,7 +141,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
       {/* Product Screens — masonry: first screen large, rest smaller */}
       {(firstScreen || restScreens.length > 0) && (
-        <section className="py-24 sm:py-32">
+        <section className="py-16 sm:py-32">
           <Container>
             <div className="mt-10 space-y-4">
               {firstScreen && (
@@ -167,7 +167,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       )}
 
       {/* Technology */}
-      <section className="bg-[var(--color-surface)] py-24">
+      <section className="bg-[var(--color-surface)] py-16 sm:py-24">
         <Container>
           <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
             {technologies.map((group) => (
@@ -185,7 +185,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* Use Cases + Roadmap */}
-      <section className="py-24">
+      <section className="py-16 sm:py-24">
         <Container className="grid gap-12 lg:grid-cols-2">
           <div>
             <ul className="mt-6 space-y-3">
@@ -213,7 +213,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       </section>
 
       {/* CTA */}
-      <section className="border-t border-[var(--color-border)] py-24 text-center">
+      <section className="border-t border-[var(--color-border)] py-16 sm:py-24 text-center">
         <Container>
           <h2 className="text-balance mx-auto max-w-lg text-3xl font-medium tracking-tight text-[var(--color-paper)]">
             Interested in a platform like {product.name}?
@@ -227,7 +227,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
       {/* Explore more */}
       {more.length > 0 && (
-        <section className="bg-[var(--color-surface)] py-24">
+        <section className="bg-[var(--color-surface)] py-16 sm:py-24">
           <Container>
             <div className="mt-8">
               <ShowcaseGrid className="sm:grid-cols-3 auto-rows-[180px]">

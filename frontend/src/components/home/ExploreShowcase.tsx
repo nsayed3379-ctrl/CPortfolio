@@ -116,7 +116,7 @@ export default function ExploreShowcase({
   const visible = filter === "all" ? items : items.filter((i) => i.kind === filter);
 
   return (
-    <section className="relative overflow-hidden py-24">
+    <section className="relative overflow-hidden py-16 sm:py-24">
       <div
         className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[420px] w-[900px] -translate-x-1/2 rounded-full opacity-[0.15] blur-[130px]"
         style={{ background: "radial-gradient(circle, var(--color-electric) 0%, transparent 70%)" }}

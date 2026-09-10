@@ -13,7 +13,7 @@ export default function HowWeWork({ steps: stepsProp }: { steps?: WorkStep[] }) 
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           title="A clear process, with you involved at every step."

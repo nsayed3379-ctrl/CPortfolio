@@ -4,7 +4,7 @@ import TextReveal from "@/components/ui/TextReveal";
 
 export default function CTASection() {
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-24">
       <Container>
         <div className="relative overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] px-8 py-16 text-center sm:px-16">
           <div

@@ -10,7 +10,7 @@ export default function WhyVicosoft({
 }) {
   const items = itemsProp && itemsProp.length > 0 ? itemsProp : WHY_VICOSOFT;
   return (
-    <section className="py-24">
+    <section className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Why VecoSoft"

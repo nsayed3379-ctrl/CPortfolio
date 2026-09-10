@@ -17,7 +17,7 @@ export default async function ServicesPage() {
   const services = fetched.length > 0 ? fetched : fallbackServices();
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           title="Everything a growing product needs, under one roof."

@@ -21,7 +21,7 @@ export default async function WorkPage() {
   const caseStudies = await sanityFetchList<CaseStudyDoc>(CASE_STUDY_LIST_QUERY, {}, { tags: ["caseStudy"] });
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Selected work"

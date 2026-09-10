@@ -17,7 +17,7 @@ export default async function LabsPage() {
   const experiments = await sanityFetchList<ExperimentDoc>(EXPERIMENT_LIST_QUERY, {}, { tags: ["experiment"] });
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           title="Beyond what exists."

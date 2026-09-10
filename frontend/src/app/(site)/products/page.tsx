@@ -42,7 +42,7 @@ export default async function ProductsPage({
   const activeCategory = categorySlug ? categories.find((c) => c.slug === categorySlug) : null;
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           eyebrow="Products"

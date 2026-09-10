@@ -14,7 +14,7 @@ export default function FAQSection({ faqs: faqsProp }: { faqs?: Faq[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-24">
+    <section id="faq" className="py-16 sm:py-24">
       <Container className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
         <SectionHeading
           eyebrow="FAQ"

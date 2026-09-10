@@ -18,7 +18,7 @@ export default async function CareersPage() {
   const jobs = fetched.length > 0 ? fetched : fallbackJobs();
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
             <h1 className="mt-4 max-w-2xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
           Build the future with VecoSoft.

@@ -29,7 +29,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
       <section className="relative overflow-hidden border-b border-[var(--color-border)]">
         <MediaFrame media={exp.images.heroImage} className="absolute inset-0 opacity-30" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/70 to-[var(--color-ink)]/40" />
-        <Container className="relative py-24">
+        <Container className="relative py-16 sm:py-24">
           <div className="flex flex-wrap items-center gap-3">
             <Badge>{exp.category}</Badge>
             <StatusBadge status={exp.status} />

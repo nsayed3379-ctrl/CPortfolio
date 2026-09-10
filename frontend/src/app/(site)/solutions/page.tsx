@@ -20,7 +20,7 @@ export default async function SolutionsPage() {
   const solutions = fetched.length > 0 ? fetched : fallbackSolutions();
 
   return (
-    <div className="py-24">
+    <div className="py-16 sm:py-24">
       <Container>
         <SectionHeading
           title="Outcomes, not just deliverables."
