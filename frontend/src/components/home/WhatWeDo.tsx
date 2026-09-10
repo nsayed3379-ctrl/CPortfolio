@@ -17,17 +17,12 @@ import {
 import { cn } from "@/lib/utils";
 import Container from "@/components/ui/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
-import MediaFrame from "@/components/ui/MediaFrame";
 import Badge from "@/components/ui/Badge";
+import EngineeringVisual from "@/components/home/EngineeringVisual";
 import { WHAT_WE_DO } from "@/lib/constants";
 
 // One icon per row, in the same order as WHAT_WE_DO (which mirrors SERVICES).
 const ICONS: LucideIcon[] = [Code2, BrainCircuit, Smartphone, PenTool, Cloud, Settings2];
-// Rotated per slide so each service's side visual reads as its own thing
-// rather than one flat panel repeated six times — same generative
-// tone/variant system MediaFrame already uses across the site.
-const TONES = ["electric", "cyan", "violet"] as const;
-const VARIANTS = ["ui", "diagram", "orbs"] as const;
 const AUTOPLAY_MS = 5500;
 
 export default function WhatWeDo() {
@@ -42,8 +37,8 @@ export default function WhatWeDo() {
     [count]
   );
 
-  // Auto-advance, paused on hover/focus/touch and disabled entirely for
-  // reduced-motion — the arrows and dots are always the primary control.
+  // Auto-advance the text card; paused on hover/focus/touch and disabled
+  // entirely for reduced-motion. The side illustration stays fixed.
   useEffect(() => {
     if (paused) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -54,51 +49,55 @@ export default function WhatWeDo() {
   const item = items[active];
   const Icon = ICONS[active % ICONS.length];
 
+  const arrowClass =
+    "focus-ring absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-paper)] shadow-sm transition-colors hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-raised)]";
+
   return (
-    <section className="py-16 sm:py-24">
+    <section
+      className="py-16 sm:py-24"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
       <Container>
         <SectionHeading
           title="Engineering, applied across the full stack."
           className="mb-8 sm:mb-12"
         />
 
-        <div
-          className="relative"
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocusCapture={() => setPaused(true)}
-          onBlurCapture={() => setPaused(false)}
-          onTouchStart={(e) => {
-            touchX.current = e.touches[0].clientX;
-            setPaused(true);
-          }}
-          onTouchEnd={(e) => {
-            const start = touchX.current;
-            touchX.current = null;
-            setPaused(false);
-            if (start == null) return;
-            const dx = e.changedTouches[0].clientX - start;
-            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-          }}
-        >
-          <div className="grid items-stretch overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] lg:grid-cols-2">
-            {/* Side visual — leads on mobile, sits right on desktop */}
-            <div className="order-1 lg:order-2">
-              <MediaFrame
-                key={`media-${active}`}
-                media={{
-                  tone: TONES[active % TONES.length],
-                  variant: VARIANTS[active % VARIANTS.length],
-                  label: item.title,
-                }}
-                className="h-full min-h-[220px] w-full animate-page-in sm:min-h-[300px] lg:min-h-[440px]"
-              />
-            </div>
+        <div className="grid items-stretch overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] lg:grid-cols-2">
+          {/* Fixed side illustration — leads on mobile, sits right on desktop */}
+          <div className="order-1 lg:order-2">
+            <EngineeringVisual />
+          </div>
 
-            {/* Card */}
+          {/* Text card with arrows flanking it */}
+          <div
+            className="relative order-2 lg:order-1"
+            onTouchStart={(e) => {
+              touchX.current = e.touches[0].clientX;
+            }}
+            onTouchEnd={(e) => {
+              const start = touchX.current;
+              touchX.current = null;
+              if (start == null) return;
+              const dx = e.changedTouches[0].clientX - start;
+              if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+            }}
+          >
+            <button
+              type="button"
+              aria-label="Previous service"
+              onClick={() => go(-1)}
+              className={cn(arrowClass, "left-2 lg:-left-5")}
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
+
             <div
-              key={`card-${active}`}
-              className="order-2 flex animate-page-in flex-col justify-center gap-4 p-6 sm:gap-5 sm:p-10 lg:order-1"
+              key={active}
+              className="flex animate-page-in flex-col justify-center gap-4 px-16 py-9 sm:gap-5 sm:px-20 sm:py-12 lg:px-14"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-ink)] text-[var(--color-electric)]">
                 <Icon className="h-6 w-6" />
@@ -130,46 +129,35 @@ export default function WhatWeDo() {
                 <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Link>
             </div>
-          </div>
-
-          {/* Controls: arrows flanking the progress dots */}
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <button
-              type="button"
-              aria-label="Previous service"
-              onClick={() => go(-1)}
-              className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-paper)] transition-colors hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-raised)]"
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-
-            <div className="flex items-center gap-2">
-              {items.map((it, i) => (
-                <button
-                  key={it.index}
-                  type="button"
-                  aria-label={`Show ${it.title}`}
-                  aria-current={i === active}
-                  onClick={() => setActive(i)}
-                  className={cn(
-                    "focus-ring h-2 rounded-full transition-all duration-300",
-                    i === active
-                      ? "w-7 bg-[var(--color-electric)]"
-                      : "w-2 bg-[var(--color-border-hover)] hover:bg-[var(--color-muted-2)]"
-                  )}
-                />
-              ))}
-            </div>
 
             <button
               type="button"
               aria-label="Next service"
               onClick={() => go(1)}
-              className="focus-ring flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-paper)] transition-colors hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-raised)]"
+              className={cn(arrowClass, "right-2 lg:-right-5")}
             >
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
+        </div>
+
+        {/* Progress dots */}
+        <div className="mt-6 flex items-center justify-center gap-2">
+          {items.map((it, i) => (
+            <button
+              key={it.index}
+              type="button"
+              aria-label={`Show ${it.title}`}
+              aria-current={i === active}
+              onClick={() => setActive(i)}
+              className={cn(
+                "focus-ring h-2 rounded-full transition-all duration-300",
+                i === active
+                  ? "w-7 bg-[var(--color-electric)]"
+                  : "w-2 bg-[var(--color-border-hover)] hover:bg-[var(--color-muted-2)]"
+              )}
+            />
+          ))}
         </div>
       </Container>
     </section>
