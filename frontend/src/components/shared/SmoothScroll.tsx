@@ -21,6 +21,12 @@ export default function SmoothScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
+    // Momentum wheel smoothing is a desktop pointer affordance. On touch
+    // devices Lenis adds nothing the OS doesn't already do better, while
+    // still running a permanent rAF loop — so skip it there entirely.
+    if (!window.matchMedia("(min-width: 1024px) and (pointer: fine)").matches) {
+      return;
+    }
 
     const lenis = new Lenis({
       duration: 1.1,

@@ -86,7 +86,7 @@ export default function ProductStack({ products: productsProp }: { products?: Pr
             cardRefs.current[i] = el;
           }}
           data-index={i}
-          className="sticky pb-6"
+          className="pb-4 sm:sticky sm:pb-6"
           style={{ top: `${STICKY_TOP_BASE + i * STICKY_TOP_STEP}px`, zIndex: i + 1 }}
         >
           <Link
@@ -106,12 +106,12 @@ export default function ProductStack({ products: productsProp }: { products?: Pr
                   className="aspect-[16/10] transition-transform duration-700 ease-out group-hover:scale-[1.06] lg:aspect-auto lg:h-full lg:min-h-[320px]"
                 />
               </div>
-              <div className="flex flex-col justify-center gap-4 p-8 sm:p-10">
+              <div className="flex flex-col justify-center gap-3 p-6 sm:gap-4 sm:p-10">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge>{product.category}</Badge>
                   <StatusBadge status={product.status} />
                 </div>
-                <h3 className="text-2xl font-medium text-[var(--color-paper)] transition-colors duration-300 group-hover:text-[var(--color-cyan)] sm:text-3xl">
+                <h3 className="text-xl font-medium text-[var(--color-paper)] transition-colors duration-300 group-hover:text-[var(--color-cyan)] sm:text-3xl">
                   {product.name}
                 </h3>
                 <p className="text-sm font-medium text-[var(--color-cyan)]">{product.tagline}</p>

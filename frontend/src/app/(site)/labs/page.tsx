@@ -22,7 +22,7 @@ export default async function LabsPage() {
         <SectionHeading
           title="Beyond what exists."
           description="Early-stage research and prototypes. Not every experiment becomes a product — that's the point of a lab."
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         />
       </Container>
 

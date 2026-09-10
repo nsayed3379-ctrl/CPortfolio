@@ -17,10 +17,10 @@ export default function CommitmentStrip({
   const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-12">
+    <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-10 sm:py-12">
       <Container>
         <div
-          className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4"
           onMouseLeave={() => setHovered(null)}
         >
           {items.map((item, i) => {

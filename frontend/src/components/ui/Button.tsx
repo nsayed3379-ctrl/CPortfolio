@@ -24,7 +24,7 @@ export default function Button({
   onClick,
 }: ButtonProps) {
   const styles = cn(
-    "focus-ring inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200",
+    "focus-ring inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-200",
     "disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none",
     variant === "primary" &&
       "bg-[var(--color-electric)] text-white hover:bg-[var(--color-electric-soft)] shadow-[0_0_0_0_rgba(46,94,255,0.4)] hover:shadow-[0_0_24px_2px_rgba(46,94,255,0.35)]",

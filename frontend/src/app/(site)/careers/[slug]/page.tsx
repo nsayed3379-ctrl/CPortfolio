@@ -32,10 +32,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
   const requirements = job.requirements ?? [];
 
   return (
-    <div className="py-20">
-      <Container className="grid gap-16 lg:grid-cols-[1.1fr_0.9fr]">
+    <div className="py-14 sm:py-20">
+      <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <div>
-          <h1 className="text-3xl font-medium tracking-tight text-[var(--color-paper)] sm:text-4xl">
+          <h1 className="text-fluid-h1 font-medium text-[var(--color-paper)]">
             {job.title}
           </h1>
           <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--color-muted)]">

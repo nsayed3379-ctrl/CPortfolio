@@ -19,7 +19,7 @@ export default function Error({
           An unexpected error occurred while loading this page. You can try again,
           or return home.
         </p>
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
           <Button onClick={reset} variant="primary">Try Again</Button>
           <Button href="/" variant="secondary">Go Home</Button>
         </div>

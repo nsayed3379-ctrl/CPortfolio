@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default function GetAQuotePage() {
   return (
     <section className="py-16 sm:py-24">
-      <Container className="grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
+      <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
         <div>
-            <h1 className="mt-4 max-w-md text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
+            <h1 className="text-fluid-hero mt-4 max-w-md font-medium text-[var(--color-paper)]">
             Tell us what you&apos;re building.
           </h1>
           <p className="mt-6 max-w-sm text-base leading-relaxed text-[var(--color-muted)]">

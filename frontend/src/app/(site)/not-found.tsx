@@ -13,7 +13,7 @@ export default function NotFound() {
           The page you&apos;re looking for may have been moved or never existed.
           Head back home or explore what we offer.
         </p>
-        <div className="mt-8 flex justify-center gap-4">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
           <Button href="/" variant="primary">Go Home</Button>
           <Button href="/contact" variant="secondary">Contact Us</Button>
         </div>

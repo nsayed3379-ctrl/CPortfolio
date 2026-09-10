@@ -25,7 +25,7 @@ export default async function SolutionsPage() {
         <SectionHeading
           title="Outcomes, not just deliverables."
           description="Solutions combine our services into a focused path toward a specific business outcome."
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         />
 
         <SolutionCardGrid solutions={solutions} />

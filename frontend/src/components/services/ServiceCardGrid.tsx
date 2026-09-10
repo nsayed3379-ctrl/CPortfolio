@@ -49,17 +49,17 @@ export default function ServiceCardGrid({ services }: { services: ServiceItem[] 
             onMouseEnter={() => setHovered(service._id)}
             onFocus={() => setHovered(service._id)}
             className={cn(
-              "focus-ring group flex min-h-[340px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-gradient-to-br p-7 transition-all duration-300 ease-out motion-reduce:transition-none",
+              "focus-ring group flex min-h-[200px] flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-gradient-to-br p-6 transition-all duration-300 ease-out motion-reduce:transition-none sm:min-h-[320px] sm:p-7",
               CARD_TINTS[i % CARD_TINTS.length],
               isHovered && "-translate-y-1.5 scale-[1.03] border-[var(--color-border-hover)] shadow-xl shadow-black/10",
               isDimmed && "opacity-40"
             )}
           >
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[var(--color-surface)]/80 text-[var(--color-electric)] shadow-sm">
-              {Icon && <Icon className="h-6 w-6" />}
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-surface)]/80 text-[var(--color-electric)] shadow-sm sm:h-14 sm:w-14">
+              {Icon && <Icon className="h-5 w-5 sm:h-6 sm:w-6" />}
             </div>
-            <h2 className="mt-7 text-xl font-medium text-[var(--color-paper)]">{service.name}</h2>
-            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-[var(--color-muted)]">
+            <h2 className="mt-5 text-lg font-medium text-[var(--color-paper)] sm:mt-7 sm:text-xl">{service.name}</h2>
+            <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[var(--color-muted)] sm:mt-3">
               {service.shortDescription}
             </p>
             <span className="focus-ring mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-[var(--color-surface)] px-4 py-2 text-sm font-medium text-[var(--color-electric)] shadow-sm transition-transform duration-300 group-hover:translate-x-1">

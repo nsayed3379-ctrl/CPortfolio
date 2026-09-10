@@ -51,15 +51,15 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       <section className="relative overflow-hidden">
         <MediaFrame media={product.images.heroImage} className="absolute inset-0 opacity-35" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/75 to-[var(--color-ink)]/30" />
-        <Container className="relative py-28 sm:py-36">
+        <Container className="relative py-16 sm:py-36">
           <div className="flex flex-wrap items-center gap-3">
             <Badge>{product.category?.name ?? "Uncategorized"}</Badge>
             <StatusBadge status={product.status} />
           </div>
-          <h1 className="mt-6 max-w-2xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-6xl">
+          <h1 className="text-fluid-hero mt-6 max-w-2xl font-medium text-[var(--color-paper)]">
             {product.name}
           </h1>
-          <p className="mt-4 max-w-lg text-lg text-[var(--color-muted)]">{product.tagline}</p>
+          <p className="mt-4 max-w-lg text-base text-[var(--color-muted)] sm:text-lg">{product.tagline}</p>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-paper)]/80">
             {product.description}
           </p>
@@ -74,7 +74,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {/* The Problem */}
       <section className="py-16 sm:py-32">
         <Container className="mx-auto max-w-3xl text-center">
-          <p className="text-balance mt-6 text-2xl font-medium leading-snug text-[var(--color-paper)] sm:text-4xl">
+          <p className="text-fluid-h2 text-balance font-medium text-[var(--color-paper)]">
             {product.problem}
           </p>
         </Container>
@@ -83,7 +83,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {/* The Idea */}
       <section className="bg-[var(--color-surface)] py-16 sm:py-32">
         <Container className="mx-auto max-w-3xl text-center">
-          <p className="text-balance mt-6 text-2xl font-medium leading-snug text-[var(--color-cyan)] sm:text-4xl">
+          <p className="text-fluid-h2 text-balance font-medium text-[var(--color-cyan)]">
             {product.idea}
           </p>
         </Container>
@@ -186,7 +186,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
       {/* Use Cases + Roadmap */}
       <section className="py-16 sm:py-24">
-        <Container className="grid gap-12 lg:grid-cols-2">
+        <Container className="grid gap-8 lg:gap-12 lg:grid-cols-2">
           <div>
             <ul className="mt-6 space-y-3">
               {useCases.map((u) => (
@@ -218,7 +218,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
           <h2 className="text-balance mx-auto max-w-lg text-3xl font-medium tracking-tight text-[var(--color-paper)]">
             Interested in a platform like {product.name}?
           </h2>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
             <Button href="/get-a-quote" variant="primary" showArrow>Get a Quote</Button>
             <Button href="/contact" variant="secondary">Contact Us</Button>
           </div>

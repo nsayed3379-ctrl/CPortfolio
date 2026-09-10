@@ -83,39 +83,40 @@ export default function ApplicationForm({ jobTitle, jobId }: { jobTitle: string;
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Full Name</label>
-          <input className={inputClass} placeholder="Jane Doe" {...register("fullName")} />
+          <label htmlFor="app-fullName" className={labelClass}>Full Name</label>
+          <input id="app-fullName" autoComplete="name" className={inputClass} placeholder="Jane Doe" {...register("fullName")} />
           {errors.fullName && <p className={errorClass}>{errors.fullName.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Email</label>
-          <input className={inputClass} placeholder="jane@email.com" {...register("email")} />
+          <label htmlFor="app-email" className={labelClass}>Email</label>
+          <input id="app-email" type="email" autoComplete="email" inputMode="email" className={inputClass} placeholder="jane@email.com" {...register("email")} />
           {errors.email && <p className={errorClass}>{errors.email.message}</p>}
         </div>
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Phone</label>
-          <input className={inputClass} placeholder="+880 1XXXXXXXXX" {...register("phone")} />
+          <label htmlFor="app-phone" className={labelClass}>Phone</label>
+          <input id="app-phone" type="tel" autoComplete="tel" inputMode="tel" className={inputClass} placeholder="+880 1XXXXXXXXX" {...register("phone")} />
           {errors.phone && <p className={errorClass}>{errors.phone.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>LinkedIn (optional)</label>
-          <input className={inputClass} placeholder="https://linkedin.com/in/..." {...register("linkedin")} />
+          <label htmlFor="app-linkedin" className={labelClass}>LinkedIn (optional)</label>
+          <input id="app-linkedin" type="url" inputMode="url" className={inputClass} placeholder="https://linkedin.com/in/..." {...register("linkedin")} />
           {errors.linkedin && <p className={errorClass}>{errors.linkedin.message}</p>}
         </div>
       </div>
 
       <div>
-        <label className={labelClass}>GitHub / Portfolio (optional)</label>
-        <input className={inputClass} placeholder="https://github.com/..." {...register("portfolio")} />
+        <label htmlFor="app-portfolio" className={labelClass}>GitHub / Portfolio (optional)</label>
+        <input id="app-portfolio" type="url" inputMode="url" className={inputClass} placeholder="https://github.com/..." {...register("portfolio")} />
         {errors.portfolio && <p className={errorClass}>{errors.portfolio.message}</p>}
       </div>
 
       <div>
-        <label className={labelClass}>Cover Letter</label>
+        <label htmlFor="app-coverLetter" className={labelClass}>Cover Letter</label>
         <textarea
+          id="app-coverLetter"
           className={inputClass}
           rows={5}
           placeholder="Tell us why you're a good fit for this role..."
@@ -125,13 +126,14 @@ export default function ApplicationForm({ jobTitle, jobId }: { jobTitle: string;
       </div>
 
       <div>
-        <label className={labelClass}>CV (PDF, max 5MB)</label>
+        <label htmlFor="app-cv" className={labelClass}>CV (PDF, max 5MB)</label>
         <div className="flex items-center gap-3 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-4">
-          <UploadCloud className="h-5 w-5 text-[var(--color-muted)]" />
+          <UploadCloud className="h-5 w-5 shrink-0 text-[var(--color-muted)]" />
           <input
+            id="app-cv"
             type="file"
             accept="application/pdf"
-            className="focus-ring w-full text-sm text-[var(--color-muted)] file:mr-4 file:rounded-full file:border-0 file:bg-[var(--color-surface-raised)] file:px-4 file:py-1.5 file:text-xs file:text-[var(--color-paper)]"
+            className="focus-ring w-full min-w-0 text-sm text-[var(--color-muted)] file:mr-4 file:rounded-full file:border-0 file:bg-[var(--color-surface-raised)] file:px-4 file:py-1.5 file:text-xs file:text-[var(--color-paper)]"
             {...register("cv")}
           />
         </div>
@@ -139,7 +141,7 @@ export default function ApplicationForm({ jobTitle, jobId }: { jobTitle: string;
       </div>
 
       <label className="flex items-start gap-3 text-xs leading-relaxed text-[var(--color-muted)]">
-        <input type="checkbox" className="focus-ring mt-0.5" {...register("consent")} />
+        <input type="checkbox" className="focus-ring mt-0.5 h-5 w-5 shrink-0" {...register("consent")} />
         I agree that VecoSoft may store my application data to evaluate this role. I can request
         deletion at any time by emailing hello@vecosoft.com.
       </label>

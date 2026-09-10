@@ -19,9 +19,9 @@ export default async function AboutPage() {
 
   return (
     <div>
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
-          <h1 className="mt-4 max-w-2xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
+          <h1 className="text-fluid-hero mt-4 max-w-2xl font-medium text-[var(--color-paper)]">
             We build the software behind ambitious businesses.
           </h1>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-muted)]">
@@ -33,14 +33,14 @@ export default async function AboutPage() {
 
       <TeamSection members={team} />
 
-      <section className="py-20 text-center">
+      <section className="py-14 text-center sm:py-20">
         <Container>
-          <h2 className="text-balance mx-auto max-w-lg text-3xl font-medium tracking-tight text-[var(--color-paper)]">
+          <h2 className="text-fluid-h2 text-balance mx-auto max-w-lg font-medium text-[var(--color-paper)]">
             Want to work together?
           </h2>
-          <div className="mt-8 flex justify-center gap-4">
-            <Button href="/get-a-quote" variant="primary" showArrow>Get a Quote</Button>
-            <Button href="/careers" variant="secondary">View Careers</Button>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row sm:gap-4">
+            <Button href="/get-a-quote" variant="primary" showArrow className="w-full sm:w-auto">Get a Quote</Button>
+            <Button href="/careers" variant="secondary" className="w-full sm:w-auto">View Careers</Button>
           </div>
         </Container>
       </section>

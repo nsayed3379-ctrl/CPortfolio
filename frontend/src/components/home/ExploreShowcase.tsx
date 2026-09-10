@@ -118,7 +118,7 @@ export default function ExploreShowcase({
   return (
     <section className="relative overflow-hidden py-16 sm:py-24">
       <div
-        className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[420px] w-[900px] -translate-x-1/2 rounded-full opacity-[0.15] blur-[130px]"
+        className="pointer-events-none absolute -top-20 left-1/2 -z-10 h-[420px] w-[min(900px,150vw)] -translate-x-1/2 rounded-full opacity-[0.15] blur-[130px]"
         style={{ background: "radial-gradient(circle, var(--color-electric) 0%, transparent 70%)" }}
       />
       <Container>
@@ -134,9 +134,10 @@ export default function ExploreShowcase({
           {TABS.map((tab) => (
             <button
               key={tab.value}
+              aria-pressed={filter === tab.value}
               onClick={() => setFilter(tab.value)}
               className={cn(
-                "focus-ring rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                "focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
                 filter === tab.value
                   ? "border-[var(--color-electric)] bg-[var(--color-electric)]/10 text-[var(--color-paper)]"
                   : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-border-hover)] hover:text-[var(--color-paper)]"

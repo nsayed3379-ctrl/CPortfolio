@@ -15,7 +15,7 @@ export default function FAQSection({ faqs: faqsProp }: { faqs?: Faq[] }) {
 
   return (
     <section id="faq" className="py-16 sm:py-24">
-      <Container className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+      <Container className="grid gap-8 lg:gap-12 lg:grid-cols-[1fr_1.4fr]">
         <SectionHeading
           eyebrow="FAQ"
           title="Common questions, answered directly."

@@ -53,6 +53,40 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Site-wide guard against a stray wide child (an absolutely-positioned
+   decorative blur, a long unbroken string) forcing a horizontal
+   scrollbar on small screens. `clip` — not `hidden` — so it doesn't
+   create a scroll container that would break `position: sticky` on the
+   header and the ProductStack deck. */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* Fluid type — headline sizes scale smoothly with the viewport instead of
+   jumping at breakpoints, so a long headline is never oversized on a
+   320px phone yet still commands the screen on desktop. Used by the hero
+   and every page/section heading. line-height tightens as size grows. */
+.text-fluid-hero {
+  font-size: clamp(2rem, 1.35rem + 3.4vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+.text-fluid-h1 {
+  font-size: clamp(1.85rem, 1.4rem + 2.2vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+.text-fluid-h2 {
+  font-size: clamp(1.6rem, 1.3rem + 1.5vw, 2.25rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.text-fluid-h3 {
+  font-size: clamp(1.15rem, 1.05rem + 0.5vw, 1.375rem);
+  line-height: 1.25;
+}
+
 /* Scroll smoothing is now handled by Lenis (see
    src/components/shared/SmoothScroll.tsx), which drives real momentum
    physics via requestAnimationFrame — a meaningfully different feel from

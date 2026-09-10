@@ -6,11 +6,31 @@
 // bundle is loading (and stays if JS fails), so there's no blank flash.
 
 import dynamic from "next/dynamic";
+import { useSyncExternalStore } from "react";
 
 const HeroScene3D = dynamic(() => import("./HeroScene3D"), {
   ssr: false,
   loading: () => <HeroVisualFallback />,
 });
+
+// Only mount the WebGL scene (three.js ~ several hundred KB, plus a live
+// rAF render loop) on desktop widths. On phones/tablets the lightweight
+// inline-SVG diagram below is shown instead — visually equivalent for the
+// hero's purpose, with none of the bundle or battery cost. `false` on the
+// server matches HeroScene3D being ssr:false anyway, so no hydration jump.
+const DESKTOP_QUERY = "(min-width: 1024px)";
+function subscribeDesktop(cb: () => void) {
+  const mq = window.matchMedia(DESKTOP_QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+function useIsDesktop() {
+  return useSyncExternalStore(
+    subscribeDesktop,
+    () => window.matchMedia(DESKTOP_QUERY).matches,
+    () => false
+  );
+}
 
 const NODES = [
   { key: "ai", label: "AI", x: 200, y: 40 },
@@ -114,5 +134,6 @@ function HeroVisualFallback() {
 }
 
 export default function HeroVisual() {
-  return <HeroScene3D />;
+  const isDesktop = useIsDesktop();
+  return isDesktop ? <HeroScene3D /> : <HeroVisualFallback />;
 }

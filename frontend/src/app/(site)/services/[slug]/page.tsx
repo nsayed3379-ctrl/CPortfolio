@@ -56,7 +56,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <section className="relative overflow-hidden border-b border-[var(--color-border)] pt-20 pb-14 text-center">
         <div className="grid-field absolute inset-0 -z-10" />
         <div
-          className="absolute -top-32 left-1/2 -z-10 h-[380px] w-[680px] -translate-x-1/2 rounded-full opacity-25 blur-[110px]"
+          className="absolute -top-32 left-1/2 -z-10 h-[380px] w-[min(680px,150vw)] -translate-x-1/2 rounded-full opacity-25 blur-[110px]"
           style={{ background: "radial-gradient(circle, var(--color-electric) 0%, transparent 70%)" }}
         />
         <Container>
@@ -90,7 +90,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             )}
           </p>
 
-          <div className="mt-10 grid gap-16 lg:grid-cols-2">
+          <div className="mt-10 grid gap-10 lg:gap-16 lg:grid-cols-2">
             <div>
               <Badge>Problems we solve</Badge>
               <ul className="mt-6 space-y-4">
@@ -117,7 +117,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </Container>
       </section>
 
-      <section className="border-t border-[var(--color-border)] py-20">
+      <section className="border-t border-[var(--color-border)] py-14 sm:py-20">
         <Container>
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {process.map((step, i) => (
@@ -132,8 +132,8 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </Container>
       </section>
 
-      <section className="border-t border-[var(--color-border)] py-20">
-        <Container className="grid gap-12 lg:grid-cols-2">
+      <section className="border-t border-[var(--color-border)] py-14 sm:py-20">
+        <Container className="grid gap-8 lg:gap-12 lg:grid-cols-2">
           <div>
             <Badge>Technology stack</Badge>
             <div className="mt-6 flex flex-wrap gap-2.5">
@@ -156,12 +156,12 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </Container>
       </section>
 
-      <section className="border-t border-[var(--color-border)] py-20 text-center">
+      <section className="border-t border-[var(--color-border)] py-14 sm:py-20 text-center">
         <Container>
           <h2 className="text-balance mx-auto max-w-lg text-3xl font-medium tracking-tight text-[var(--color-paper)]">
             Ready to talk about your {service.name.toLowerCase()} project?
           </h2>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
             <Button href="/get-a-quote" variant="primary" showArrow>Get a Quote</Button>
             <Button href="/contact" variant="secondary">Contact Us</Button>
           </div>

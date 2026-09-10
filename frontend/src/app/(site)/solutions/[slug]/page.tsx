@@ -28,7 +28,7 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
 
   return (
     <div>
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
           <h1 className="mt-6 max-w-2xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
             {solution.name}
@@ -42,7 +42,7 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
           <ul className="mt-6 max-w-xl space-y-4">
             {outcomes.map((o) => (
@@ -56,7 +56,7 @@ export default async function SolutionDetailPage({ params }: { params: Promise<{
       </section>
 
       {related.length > 0 && (
-        <section className="py-20">
+        <section className="py-14 sm:py-20">
           <Container>
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
               {related.map((service) => (

@@ -17,7 +17,7 @@ export default function HowWeWork({ steps: stepsProp }: { steps?: WorkStep[] }) 
       <Container>
         <SectionHeading
           title="A clear process, with you involved at every step."
-          className="mb-12"
+          className="mb-8 sm:mb-12"
         />
         <div
           className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"

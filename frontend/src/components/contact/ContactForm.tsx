@@ -63,31 +63,31 @@ export default function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Name</label>
-          <input className={inputClass} placeholder="Your name" {...register("name")} />
+          <label htmlFor="contact-name" className={labelClass}>Name</label>
+          <input id="contact-name" autoComplete="name" className={inputClass} placeholder="Your name" {...register("name")} />
           {errors.name && <p className={errorClass}>{errors.name.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Email</label>
-          <input className={inputClass} placeholder="you@email.com" {...register("email")} />
+          <label htmlFor="contact-email" className={labelClass}>Email</label>
+          <input id="contact-email" type="email" autoComplete="email" inputMode="email" className={inputClass} placeholder="you@email.com" {...register("email")} />
           {errors.email && <p className={errorClass}>{errors.email.message}</p>}
         </div>
       </div>
 
       <div>
-        <label className={labelClass}>Company (optional)</label>
-        <input className={inputClass} placeholder="Company name" {...register("company")} />
+        <label htmlFor="contact-company" className={labelClass}>Company (optional)</label>
+        <input id="contact-company" autoComplete="organization" className={inputClass} placeholder="Company name" {...register("company")} />
       </div>
 
       <div>
-        <label className={labelClass}>Subject</label>
-        <input className={inputClass} placeholder="What's this about?" {...register("subject")} />
+        <label htmlFor="contact-subject" className={labelClass}>Subject</label>
+        <input id="contact-subject" className={inputClass} placeholder="What's this about?" {...register("subject")} />
         {errors.subject && <p className={errorClass}>{errors.subject.message}</p>}
       </div>
 
       <div>
-        <label className={labelClass}>Message</label>
-        <textarea className={inputClass} rows={5} placeholder="Tell us a bit about your project..." {...register("message")} />
+        <label htmlFor="contact-message" className={labelClass}>Message</label>
+        <textarea id="contact-message" className={inputClass} rows={5} placeholder="Tell us a bit about your project..." {...register("message")} />
         {errors.message && <p className={errorClass}>{errors.message.message}</p>}
       </div>
 

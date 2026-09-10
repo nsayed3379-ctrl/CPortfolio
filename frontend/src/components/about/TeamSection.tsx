@@ -104,9 +104,9 @@ function TeamRow({ member, index }: { member: TeamMemberDoc; index: number }) {
 export default function TeamSection({ members }: { members: TeamMemberDoc[] }) {
   if (members.length === 0) return null;
   return (
-    <section className="border-b border-[var(--color-border)] py-20">
+    <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
       <Container>
-        <SectionHeading title="The people behind VecoSoft." className="mb-12" />
+        <SectionHeading title="The people behind VecoSoft." className="mb-8 sm:mb-12" />
         <div>
           {members.map((member, i) => (
             <TeamRow key={member._id} member={member} index={i} />

@@ -22,7 +22,7 @@ export default async function ServicesPage() {
         <SectionHeading
           title="Everything a growing product needs, under one roof."
           description="We work across the full stack — from first design concept to the infrastructure keeping your product online."
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         />
 
         <ServiceCardGrid services={services} />

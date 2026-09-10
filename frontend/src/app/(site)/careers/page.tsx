@@ -20,7 +20,7 @@ export default async function CareersPage() {
   return (
     <div className="py-16 sm:py-24">
       <Container>
-            <h1 className="mt-4 max-w-2xl text-4xl font-medium tracking-tight text-[var(--color-paper)] sm:text-5xl">
+            <h1 className="text-fluid-hero mt-4 max-w-2xl font-medium text-[var(--color-paper)]">
           Build the future with VecoSoft.
         </h1>
         <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-muted)]">

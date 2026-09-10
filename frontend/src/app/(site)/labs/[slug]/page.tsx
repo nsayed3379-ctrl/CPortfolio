@@ -41,13 +41,13 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-[var(--color-muted)]">{exp.description}</p>
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
             <div className="mt-6 flex flex-wrap gap-2">
             {technologies.map((t) => <Badge key={t}>{t}</Badge>)}
@@ -55,7 +55,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         </Container>
       </section>
 
-      <section className="py-20 text-center">
+      <section className="py-14 sm:py-20 text-center">
         <Container>
           <h2 className="text-balance mx-auto max-w-lg text-3xl font-medium tracking-tight text-[var(--color-paper)]">
             Curious where this could go?
@@ -63,7 +63,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           <p className="mx-auto mt-3 max-w-md text-sm text-[var(--color-muted)]">
             Labs work is early-stage by nature. If this direction is relevant to your business, we&apos;d like to talk.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-wrap justify-center gap-3 sm:gap-4">
             <Button href="/contact" variant="primary" showArrow>Talk to Us</Button>
             <Button href="/labs" variant="secondary">Back to Labs</Button>
           </div>

@@ -19,11 +19,11 @@ export default function SectionHeading({
 }) {
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
-      <h2 className="text-balance text-3xl font-medium tracking-tight text-[var(--color-paper)] sm:text-4xl">
+      <h2 className="text-fluid-h2 text-balance font-medium text-[var(--color-paper)]">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">
+        <p className="mt-3 text-base leading-relaxed text-[var(--color-muted)] sm:mt-4">
           {description}
         </p>
       )}

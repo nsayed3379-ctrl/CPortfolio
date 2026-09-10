@@ -42,8 +42,8 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
-        <Container className="grid gap-12 lg:grid-cols-2">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
+        <Container className="grid gap-8 lg:gap-12 lg:grid-cols-2">
           <div>
             <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">{cs.challenge}</p>
           </div>
@@ -53,7 +53,7 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
         <Container>
           <ul className="mt-6 grid gap-4 sm:grid-cols-2">
             {approach.map((a, i) => (
@@ -65,8 +65,8 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </Container>
       </section>
 
-      <section className="border-b border-[var(--color-border)] py-20">
-        <Container className="grid gap-12 lg:grid-cols-2">
+      <section className="border-b border-[var(--color-border)] py-14 sm:py-20">
+        <Container className="grid gap-8 lg:gap-12 lg:grid-cols-2">
           <div>
             <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">{cs.architecture}</p>
           </div>
@@ -76,7 +76,7 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="py-14 sm:py-20">
         <Container>
           <div className="mt-6 flex flex-wrap gap-2">
             {technologies.map((t) => <Badge key={t}>{t}</Badge>)}

@@ -70,15 +70,16 @@ export default function QuoteForm() {
       <input type="text" tabIndex={-1} autoComplete="off" className="hidden" {...register("company_website")} />
 
       <div>
-        <label className={labelClass}>What do you need?</label>
+        <span className={labelClass}>What do you need?</span>
         <div className="flex flex-wrap gap-2">
           {PROJECT_TYPES.map((type) => (
             <button
               type="button"
               key={type}
+              aria-pressed={selectedType === type}
               onClick={() => setValue("projectType", type, { shouldValidate: true })}
               className={cn(
-                "focus-ring rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                "focus-ring min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
                 selectedType === type
                   ? "border-[var(--color-electric)] bg-[var(--color-electric)]/10 text-[var(--color-paper)]"
                   : "border-[var(--color-border)] text-[var(--color-muted)] hover:border-[var(--color-border-hover)]"
@@ -93,16 +94,16 @@ export default function QuoteForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Budget</label>
-          <select className={inputClass} defaultValue="" {...register("budget")}>
+          <label htmlFor="quote-budget" className={labelClass}>Budget</label>
+          <select id="quote-budget" className={inputClass} defaultValue="" {...register("budget")}>
             <option value="" disabled>Select a range</option>
             {BUDGETS.map((b) => <option key={b} value={b}>{b}</option>)}
           </select>
           {errors.budget && <p className={errorClass}>{errors.budget.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Timeline</label>
-          <select className={inputClass} defaultValue="" {...register("timeline")}>
+          <label htmlFor="quote-timeline" className={labelClass}>Timeline</label>
+          <select id="quote-timeline" className={inputClass} defaultValue="" {...register("timeline")}>
             <option value="" disabled>Select a timeline</option>
             {TIMELINES.map((t) => <option key={t} value={t}>{t}</option>)}
           </select>
@@ -111,20 +112,20 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className={labelClass}>Project Description</label>
-        <textarea className={inputClass} rows={5} placeholder="What are you building? What problem does it solve?" {...register("description")} />
+        <label htmlFor="quote-description" className={labelClass}>Project Description</label>
+        <textarea id="quote-description" className={inputClass} rows={5} placeholder="What are you building? What problem does it solve?" {...register("description")} />
         {errors.description && <p className={errorClass}>{errors.description.message}</p>}
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Name</label>
-          <input className={inputClass} placeholder="Your name" {...register("name")} />
+          <label htmlFor="quote-name" className={labelClass}>Name</label>
+          <input id="quote-name" autoComplete="name" className={inputClass} placeholder="Your name" {...register("name")} />
           {errors.name && <p className={errorClass}>{errors.name.message}</p>}
         </div>
         <div>
-          <label className={labelClass}>Email</label>
-          <input className={inputClass} placeholder="you@email.com" {...register("email")} />
+          <label htmlFor="quote-email" className={labelClass}>Email</label>
+          <input id="quote-email" type="email" autoComplete="email" inputMode="email" className={inputClass} placeholder="you@email.com" {...register("email")} />
           {errors.email && <p className={errorClass}>{errors.email.message}</p>}
         </div>
       </div>

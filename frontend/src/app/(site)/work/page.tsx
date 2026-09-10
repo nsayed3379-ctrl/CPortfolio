@@ -27,7 +27,7 @@ export default async function WorkPage() {
           eyebrow="Selected work"
           title="How we work, through real projects."
           description="Client engagements, the problems we solved, and how we approached them."
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         />
       </Container>
 
