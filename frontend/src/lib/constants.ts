@@ -680,10 +680,10 @@ export const FAQS = [
 // ── Trust commitments ─────────────────────────────────────────
 
 export const OUR_COMMITMENTS = [
-  { title: "Agile & Iterative", description: "Fast sprints with continuous deployment and early feedback loops." },
-  { title: "Production-Grade Architecture", description: "Built to scale seamlessly with zero technical debt from day one." },
-  { title: "Human-Centered Design", description: "Intuitive user interfaces engineered for seamless adoption." },
-  { title: "AI-First Approach", description: "Smart automation integrated directly into your core workflow." },
+  { title: "Speed Without Compromise", description: "From concept to launch in weeks, not months — so you validate your idea in the real market while competitors are still writing specs." },
+  { title: "Cost Certainty, Guaranteed", description: "Fixed milestones. Fixed pricing. Zero surprises. You know exactly what you're paying for and exactly when it ships — every time." },
+  { title: "Engineering That Scales With You", description: "Built on enterprise-grade, future-proof architecture designed to handle 10x growth — without a costly rewrite down the line." },
+  { title: "A Partner, Not a Vendor", description: "We stay engaged after go-live with SLA-backed monitoring and support, because our reputation is tied to your product staying up." },
 ];
 
 // ── Careers ───────────────────────────────────────────────────

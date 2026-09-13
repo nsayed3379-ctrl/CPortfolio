@@ -66,15 +66,12 @@ export default function WhatWeDo() {
           className="mb-8 sm:mb-12"
         />
 
-        <div className="grid items-stretch overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] lg:grid-cols-2">
-          {/* Fixed side illustration — leads on mobile, sits right on desktop */}
-          <div className="order-1 lg:order-2">
-            <EngineeringVisual />
-          </div>
-
-          {/* Text card with arrows flanking it */}
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-stretch lg:gap-6">
+          {/* Card and illustration are two independent floating elements —
+              not one shared bordered box — but sized equally (same column,
+              same min-height) so neither dominates the other. */}
           <div
-            className="relative order-2 lg:order-1"
+            className="relative z-10 order-2 lg:order-1"
             onTouchStart={(e) => {
               touchX.current = e.touches[0].clientX;
             }}
@@ -90,17 +87,17 @@ export default function WhatWeDo() {
               type="button"
               aria-label="Previous service"
               onClick={() => go(-1)}
-              className={cn(arrowClass, "left-2 lg:-left-5")}
+              className={cn(arrowClass, "left-2 lg:-left-6")}
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
 
             <div
               key={active}
-              className="flex animate-page-in flex-col justify-center gap-4 px-16 py-9 sm:gap-5 sm:px-20 sm:py-12 lg:px-14"
+              className="animate-page-in flex min-h-[220px] flex-col justify-center gap-3 rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] px-14 py-7 shadow-xl shadow-black/5 sm:min-h-[260px] sm:gap-4 sm:px-16 sm:py-9 lg:min-h-[300px] lg:px-10 lg:py-8"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-ink)] text-[var(--color-electric)]">
-                <Icon className="h-6 w-6" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--color-border)] bg-[var(--color-ink)] text-[var(--color-electric)]">
+                <Icon className="h-5 w-5" />
               </div>
               <div>
                 <span
@@ -109,11 +106,11 @@ export default function WhatWeDo() {
                 >
                   {item.index}
                 </span>
-                <h3 className="text-fluid-h2 mt-1 font-medium text-[var(--color-paper)]">
+                <h3 className="text-fluid-h3 mt-1 font-medium text-[var(--color-paper)]">
                   {item.title}
                 </h3>
               </div>
-              <p className="max-w-md text-base leading-relaxed text-[var(--color-muted)]">
+              <p className="max-w-md text-sm leading-relaxed text-[var(--color-muted)]">
                 {item.description}
               </p>
               <div className="flex flex-wrap gap-2">
@@ -134,10 +131,16 @@ export default function WhatWeDo() {
               type="button"
               aria-label="Next service"
               onClick={() => go(1)}
-              className={cn(arrowClass, "right-2 lg:-right-5")}
+              className={cn(arrowClass, "right-2 lg:-right-6")}
             >
               <ArrowRight className="h-4 w-4" />
             </button>
+          </div>
+
+          {/* Fixed illustration — leads on mobile, sits right on desktop,
+              matching the card's footprint exactly. */}
+          <div className="order-1 lg:order-2">
+            <EngineeringVisual />
           </div>
         </div>
 

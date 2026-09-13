@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Container from "@/components/ui/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { OUR_COMMITMENTS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Repeat, Layers, Users, BrainCircuit, type LucideIcon } from "lucide-react";
+import { Rocket, Receipt, ShieldCheck, LifeBuoy, type LucideIcon } from "lucide-react";
 
-const ICONS: LucideIcon[] = [Repeat, Layers, Users, BrainCircuit];
+const ICONS: LucideIcon[] = [Rocket, Receipt, ShieldCheck, LifeBuoy];
 
 export default function CommitmentStrip({
   commitments,
@@ -19,6 +20,11 @@ export default function CommitmentStrip({
   return (
     <section className="border-y border-[var(--color-border)] bg-[var(--color-surface)] py-10 sm:py-12">
       <Container>
+        <SectionHeading
+          title="Why Founders Choose Us"
+          align="center"
+          className="mx-auto mb-8 sm:mb-10"
+        />
         <div
           className="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-4"
           onMouseLeave={() => setHovered(null)}
