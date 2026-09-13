@@ -18,7 +18,7 @@ import type { ServiceDoc } from "@/sanity/types";
 // available. For now we rely on the system font stack defined in globals.css.
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vecosoft.com"),
+  metadataBase: new URL(SITE.url),
   title: {
     default: `${SITE.name} — Digital Products, AI Solutions & Software`,
     template: `%s | ${SITE.name}`,

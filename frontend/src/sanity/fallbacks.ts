@@ -10,9 +10,9 @@
 // Deliberate exception: Work (case studies) has NO fallback here — see
 // the comment on fallbackCaseStudies() below.
 
-import { SERVICES, SOLUTIONS, PRODUCTS, CASE_STUDIES, EXPERIMENTS, JOBS, TEAM_MEMBERS } from "@/lib/constants";
+import { SERVICES, SOLUTIONS, PRODUCTS, CASE_STUDIES, JOBS, TEAM_MEMBERS } from "@/lib/constants";
 import type {
-  ServiceDoc, SolutionDoc, ProductDoc, ProductCategoryDoc, CaseStudyDoc, ExperimentDoc, JobDoc, TeamMemberDoc,
+  ServiceDoc, SolutionDoc, ProductDoc, ProductCategoryDoc, CaseStudyDoc, JobDoc, TeamMemberDoc,
 } from "./types";
 
 // Turns a free-text category string ("AI Platform") into the same
@@ -108,7 +108,7 @@ export function fallbackFeaturedProducts(limit = 6): ProductDoc[] {
 // No fallback content for Work/case studies, on purpose: CASE_STUDIES has
 // always been an intentionally empty array (see constants.ts's own
 // comment), since a "case study" implies a real, verifiable client
-// outcome — unlike Products/Services/Labs, which have always shown
+// outcome — unlike Products/Services, which have always shown
 // legitimate concept-stage placeholder content that never claimed to be
 // something it wasn't. Faking a client engagement, even as a "fallback,"
 // would cross the line this project has held since Phase 2. This function
@@ -141,29 +141,6 @@ export function fallbackCaseStudyBySlug(slug: string): CaseStudyDoc | null {
 
 export function fallbackFeaturedCaseStudies(limit = 6): CaseStudyDoc[] {
   return fallbackCaseStudies().slice(0, limit);
-}
-
-export function fallbackExperiments(): ExperimentDoc[] {
-  return EXPERIMENTS.map((e) => ({
-    _id: e.slug,
-    title: e.title,
-    slug: { current: e.slug },
-    category: e.category,
-    status: e.status,
-    summary: e.summary,
-    description: e.description,
-    technologies: e.technologies,
-    images: e.images,
-    size: e.size,
-  }));
-}
-
-export function fallbackExperimentBySlug(slug: string): ExperimentDoc | null {
-  return fallbackExperiments().find((e) => e.slug.current === slug) ?? null;
-}
-
-export function fallbackFeaturedExperiments(limit = 6): ExperimentDoc[] {
-  return fallbackExperiments().slice(0, limit);
 }
 
 export function fallbackJobs(): JobDoc[] {

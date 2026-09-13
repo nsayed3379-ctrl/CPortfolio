@@ -19,7 +19,6 @@ const columns = [
       ...(FEATURES.solutions ? [{ label: "Solutions", href: "/solutions" }] : []),
       ...(FEATURES.products ? [{ label: "Products", href: "/products" }] : []),
       ...(FEATURES.work ? [{ label: "Work", href: "/work" }] : []),
-      { label: "Labs", href: "/labs" },
     ],
   },
   {
@@ -96,7 +95,7 @@ export default function Footer({
             </div>
           </div>
 
-          {allColumns.map((col) => (
+          {allColumns.filter((col) => col.links.length > 0).map((col) => (
             <div key={col.title}>
               <h3 className="eyebrow text-xs font-medium text-[var(--color-muted-2)]">
                 {col.title.toUpperCase()}

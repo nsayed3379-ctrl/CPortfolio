@@ -9,6 +9,11 @@ export const SITE = {
   tagline: "Built for Scale. Engineered for Impact.",
   email: "hello@vecosoft.com",
   location: "Dhaka, Bangladesh",
+  // Canonical production origin — no trailing slash. Single source of truth
+  // for metadataBase (layout.tsx) and the generated sitemap.xml/robots.txt
+  // (see app/sitemap.ts, app/robots.ts), so the domain can never drift
+  // out of sync between them.
+  url: "https://www.vecosoft.com",
   social: {
     linkedin: "https://linkedin.com",
     github: "https://github.com",
@@ -46,19 +51,11 @@ export const NAV_LINKS = [
     ],
   },
   { label: "Work", href: "/work" },
-  { label: "Labs", href: "/labs" },
-  {
-    label: "Company",
-    href: "/about",
-    dropdown: [
-      { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
+  { label: "About", href: "/about" },
+  { label: "Careers", href: "/careers" },
 ];
 
-// ── Status system (used across Products / Work / Labs) ────────
+// ── Status system (used across Products / Work) ────────
 
 export type Status = "live" | "in-development" | "prototype" | "concept" | "research";
 
@@ -77,7 +74,7 @@ export const STATUS_LABEL: Record<Status, string> = {
 
 export type MediaRef = {
   // Restraint by design: stick to "electric" / "cyan" / "graphite" for
-  // everyday use across products, work, and labs — these three carry the
+  // everyday use across products and work — these two carry the
   // brand's meaning (primary, secondary, neutral). "violet" and "amber"
   // exist for rare, deliberate emphasis only (e.g. a one-off highlight),
   // not as default rotation — a five-tone palette reads as decorative
@@ -559,22 +556,6 @@ export type CaseStudy = {
 };
 
 export const CASE_STUDIES: CaseStudy[] = [];
-
-// ── Labs: experimental / R&D work ────────────────────────────────
-
-export type Experiment = {
-  slug: string;
-  title: string;
-  category: string;
-  status: Status;
-  summary: string;
-  description: string;
-  technologies: string[];
-  images: ProjectImages;
-  size: "wide" | "tall" | "large" | "standard";
-};
-
-export const EXPERIMENTS: Experiment[] = [];
 
 // ── Why VecoSoft ──────────────────────────────────────────────
 

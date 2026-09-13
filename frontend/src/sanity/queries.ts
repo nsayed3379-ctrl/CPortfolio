@@ -12,7 +12,7 @@
 
 import type {
   ServiceDoc, SolutionDoc, ProductDoc, ProductCategoryDoc, CaseStudyDoc,
-  ExperimentDoc, JobDoc, FaqDoc, TeamMemberDoc, SiteSettingsDoc,
+  JobDoc, FaqDoc, TeamMemberDoc, SiteSettingsDoc,
   ProjectImagesDoc, MediaRefDoc,
 } from "./types";
 
@@ -54,6 +54,7 @@ function toService(r: any): ServiceDoc {
     process: r.process ?? [],
     deliverables: r.deliverables ?? [],
     order: r.display_order ?? undefined,
+    updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -175,41 +176,6 @@ function toCaseStudy(r: any): CaseStudyDoc {
   };
 }
 
-// -------------------------------------------------------------- experiments
-export const EXPERIMENT_LIST_QUERY: QueryDef<ExperimentDoc[]> = {
-  path: () => "/experiments",
-  transform: (raw) => (raw as any[]).map(toExperiment),
-};
-export const EXPERIMENT_FEATURED_QUERY: QueryDef<ExperimentDoc[]> = {
-  path: ({ limit }) => `/experiments/featured${qs({ limit })}`,
-  transform: (raw) => (raw as any[]).map(toExperiment),
-};
-export const EXPERIMENT_BY_SLUG_QUERY: QueryDef<ExperimentDoc> = {
-  path: ({ slug }) => `/experiments/${slug}`,
-  transform: (raw) => toExperiment(raw),
-};
-export const EXPERIMENT_SLUGS_QUERY: QueryDef<string[]> = {
-  path: () => "/experiments",
-  transform: (raw) => (raw as any[]).map((r) => r.slug),
-};
-
-function toExperiment(r: any): ExperimentDoc {
-  return {
-    _id: String(r.id),
-    title: r.title,
-    slug: { current: r.slug },
-    category: r.category,
-    status: r.status,
-    summary: r.summary,
-    description: r.description,
-    technologies: r.technologies ?? [],
-    images: toProjectImages(r.images),
-    size: r.size,
-    order: r.display_order ?? undefined,
-    featured: r.featured ?? false,
-  };
-}
-
 // -------------------------------------------------------------------- jobs
 export const JOB_LIST_QUERY: QueryDef<JobDoc[]> = {
   path: () => "/jobs",
@@ -240,6 +206,7 @@ function toJob(r: any): JobDoc {
     benefits: r.benefits ?? [],
     status: r.status,
     deadline: r.deadline ?? undefined,
+    updatedAt: r.updated_at ?? undefined,
   };
 }
 

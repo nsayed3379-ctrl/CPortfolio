@@ -43,6 +43,8 @@ export type ServiceDoc = {
   process: ProcessStepDoc[];
   deliverables: string[];
   order?: number;
+  /** ISO timestamp, when available — used for sitemap.xml's lastModified. */
+  updatedAt?: string;
 };
 
 export type SolutionDoc = {
@@ -103,21 +105,6 @@ export type CaseStudyDoc = {
   clientApproved: boolean;
 };
 
-export type ExperimentDoc = {
-  _id: string;
-  title: string;
-  slug: SanitySlug;
-  category: string;
-  status: Status;
-  summary: string;
-  description: string;
-  technologies: string[];
-  images: ProjectImagesDoc;
-  size: GridSize;
-  order?: number;
-  featured?: boolean;
-};
-
 export type JobDoc = {
   _id: string;
   title: string;
@@ -133,6 +120,8 @@ export type JobDoc = {
   benefits?: string[];
   status: "open" | "closed";
   deadline?: string;
+  /** ISO timestamp, when available — used for sitemap.xml's lastModified. */
+  updatedAt?: string;
 };
 
 export type FaqDoc = {

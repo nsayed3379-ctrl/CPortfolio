@@ -6,18 +6,17 @@ import Button from "@/components/ui/Button";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ShowcaseGrid from "@/components/showcase/ShowcaseGrid";
 import ShowcaseTile from "@/components/showcase/ShowcaseTile";
-import { PRODUCTS, CASE_STUDIES, EXPERIMENTS } from "@/lib/constants";
+import { PRODUCTS, CASE_STUDIES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import type { ProductDoc, CaseStudyDoc, ExperimentDoc } from "@/sanity/types";
+import type { ProductDoc, CaseStudyDoc } from "@/sanity/types";
 
-type Kind = "product" | "work" | "lab";
+type Kind = "product" | "work";
 type Filter = "all" | Kind;
 
 const TABS: { label: string; value: Filter }[] = [
   { label: "All", value: "all" },
   { label: "Products", value: "product" },
   { label: "Work", value: "work" },
-  { label: "Labs", value: "lab" },
 ];
 
 // This is a client component (needs useState for the filter tabs), so it
@@ -29,11 +28,9 @@ const TABS: { label: string; value: Filter }[] = [
 export default function ExploreShowcase({
   products: productsProp,
   work: workProp,
-  labs: labsProp,
 }: {
   products?: ProductDoc[];
   work?: CaseStudyDoc[];
-  labs?: ExperimentDoc[];
 }) {
   const [filter, setFilter] = useState<Filter>("all");
 
@@ -84,34 +81,11 @@ export default function ExploreShowcase({
             size: c.size,
           }));
 
-    const labs =
-      labsProp && labsProp.length > 0
-        ? labsProp.map((e) => ({
-            kind: "lab" as const,
-            slug: e.slug.current,
-            href: `/labs/${e.slug.current}`,
-            title: e.title,
-            category: e.category,
-            status: e.status,
-            media: e.images.thumbnail,
-            size: e.size,
-          }))
-        : EXPERIMENTS.map((e) => ({
-            kind: "lab" as const,
-            slug: e.slug,
-            href: `/labs/${e.slug}`,
-            title: e.title,
-            category: e.category,
-            status: e.status,
-            media: e.images.thumbnail,
-            size: e.size,
-          }));
-
-    // Blend all three so the "All" view reads as one ecosystem rather than
-    // three stacked lists — products lead since they're most representative
-    // of VecoSoft's own work, work/labs interleaved after.
-    return [...products, ...work, ...labs];
-  }, [productsProp, workProp, labsProp]);
+    // Blend both so the "All" view reads as one ecosystem rather than two
+    // stacked lists — products lead since they're most representative of
+    // VecoSoft's own work, work interleaved after.
+    return [...products, ...work];
+  }, [productsProp, workProp]);
 
   const visible = filter === "all" ? items : items.filter((i) => i.kind === filter);
 
@@ -126,7 +100,7 @@ export default function ExploreShowcase({
           <SectionHeading
             eyebrow="What we build"
             title="Things we've built. Things we're building."
-            description="Explore our products, experiments, and selected work."
+            description="Explore our products and selected work."
           />
         </div>
 

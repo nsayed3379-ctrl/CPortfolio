@@ -1,5 +1,5 @@
 // Used by every homepage section that shows a curated subset of a larger
-// collection (Products, Work, Labs). Three-way logic, deliberately in
+// collection (Products, Work). Three-way logic, deliberately in
 // this order:
 //
 // 1. No real Sanity items at all → use the constants.ts fallback (capped).

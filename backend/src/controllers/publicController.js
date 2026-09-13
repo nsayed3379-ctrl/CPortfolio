@@ -12,7 +12,10 @@ function pick(row, columns) {
 // ------------------------------------------------------------------ services
 async function listServices(req, res) {
   const rows = await genericModel.list("services");
-  res.json(rows.map((r) => pick(r, ["id", "name", "slug", "short_description", "icon"])));
+  // updated_at included (in addition to the original public fields) so the
+  // frontend's sitemap can report an honest lastModified per service page
+  // instead of inventing one.
+  res.json(rows.map((r) => pick(r, ["id", "name", "slug", "short_description", "icon", "updated_at"])));
 }
 async function getService(req, res) {
   const row = await genericModel.getBySlug("services", req.params.slug);
