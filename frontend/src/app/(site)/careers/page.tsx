@@ -23,9 +23,6 @@ export default async function CareersPage() {
             <h1 className="text-fluid-hero mt-4 max-w-2xl font-medium text-[var(--color-paper)]">
           Build the future with VecoSoft.
         </h1>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--color-muted)]">
-          We&apos;re a small, focused team that cares about craft. If that sounds like you, take a look at what&apos;s open.
-        </p>
 
         <div className="mt-16">
 {jobs.length === 0 ? (
