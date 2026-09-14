@@ -26,4 +26,24 @@ module.exports = {
 
   uploadDir: process.env.UPLOAD_DIR || "uploads",
   maxUploadMb: Number(process.env.MAX_UPLOAD_MB || 8),
+
+  // Outbound email (contact/inquiry/application notifications). Any SMTP
+  // provider works (Zoho Mail, Google Workspace, cPanel webmail, ...).
+  // Leaving SMTP_HOST unset disables sending entirely — see src/utils/mailer.js;
+  // forms still save to the database either way.
+  smtp: {
+    host: process.env.SMTP_HOST || "",
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: bool(process.env.SMTP_SECURE, false), // true for port 465, false for 587/25 (STARTTLS)
+    user: process.env.SMTP_USER || "",
+    pass: process.env.SMTP_PASS || "",
+    from: process.env.MAIL_FROM || "VecoSoft Website <no-reply@vecosoft.com>",
+  },
+  // Where each form's notification email is sent — separate per form so
+  // e.g. job applications can go straight to a hiring inbox.
+  notify: {
+    contact: process.env.CONTACT_NOTIFY_EMAIL || "hello@vecosoft.com",
+    inquiry: process.env.INQUIRY_NOTIFY_EMAIL || "hello@vecosoft.com",
+    careers: process.env.CAREERS_NOTIFY_EMAIL || "careers@vecosoft.com",
+  },
 };

@@ -2,6 +2,8 @@ const genericModel = require("../models/genericModel");
 const siteSettingsModel = require("../models/siteSettings");
 const { query } = require("../config/db");
 const { publicUrlFor } = require("../middleware/upload");
+const env = require("../config/env");
+const { sendMail, escapeHtml } = require("../utils/mailer");
 
 function pick(row, columns) {
   const out = {};
@@ -150,6 +152,22 @@ async function submitContact(req, res) {
     `INSERT INTO contact_messages (name, email, company, subject, message) VALUES ($1,$2,$3,$4,$5) RETURNING id`,
     [name, email, company || null, subject, message]
   );
+
+  await sendMail({
+    to: env.notify.contact,
+    replyTo: email,
+    subject: `New contact message: ${subject}`,
+    html: `
+      <h2>New contact form submission</h2>
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ""}
+      <p><strong>Subject:</strong> ${escapeHtml(subject)}</p>
+      <p><strong>Message:</strong><br>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
+      <hr><p>Reply directly to this email to respond to ${escapeHtml(name)}.</p>
+    `,
+  });
+
   res.status(201).json({ ok: true, id: rows[0].id });
 }
 
@@ -163,6 +181,23 @@ async function submitInquiry(req, res) {
      VALUES ($1,$2,$3,$4,$5,$6) RETURNING id`,
     [projectType, budget, timeline, description, name, email]
   );
+
+  await sendMail({
+    to: env.notify.inquiry,
+    replyTo: email,
+    subject: `New project inquiry: ${projectType} — ${name}`,
+    html: `
+      <h2>New "Get a Quote" submission</h2>
+      <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Project type:</strong> ${escapeHtml(projectType)}</p>
+      <p><strong>Budget:</strong> ${escapeHtml(budget)}</p>
+      <p><strong>Timeline:</strong> ${escapeHtml(timeline)}</p>
+      <p><strong>Description:</strong><br>${escapeHtml(description).replace(/\n/g, "<br>")}</p>
+      <hr><p>Reply directly to this email to respond to ${escapeHtml(name)}.</p>
+    `,
+  });
+
   res.status(201).json({ ok: true, id: rows[0].id });
 }
 
@@ -195,6 +230,26 @@ async function submitApplication(req, res) {
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
     [resolvedTitle, jobId, fullName, email, phone, linkedin || null, portfolio || null, coverLetter, req.file.originalname, cvUrl, consent === "true" || consent === true]
   );
+
+  const cvAbsoluteUrl = `${env.appUrl}${cvUrl}`;
+  await sendMail({
+    to: env.notify.careers,
+    replyTo: email,
+    subject: `New application: ${resolvedTitle} — ${fullName}`,
+    html: `
+      <h2>New job application</h2>
+      <p><strong>Position:</strong> ${escapeHtml(resolvedTitle)}</p>
+      <p><strong>Name:</strong> ${escapeHtml(fullName)}</p>
+      <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
+      ${linkedin ? `<p><strong>LinkedIn:</strong> <a href="${escapeHtml(linkedin)}">${escapeHtml(linkedin)}</a></p>` : ""}
+      ${portfolio ? `<p><strong>Portfolio:</strong> <a href="${escapeHtml(portfolio)}">${escapeHtml(portfolio)}</a></p>` : ""}
+      <p><strong>CV:</strong> <a href="${cvAbsoluteUrl}">${cvAbsoluteUrl}</a></p>
+      <p><strong>Cover letter:</strong><br>${escapeHtml(coverLetter).replace(/\n/g, "<br>")}</p>
+      <hr><p>Reply directly to this email to respond to ${escapeHtml(fullName)}.</p>
+    `,
+  });
+
   res.status(201).json({ ok: true, id: rows[0].id });
 }
 
