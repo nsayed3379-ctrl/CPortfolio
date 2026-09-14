@@ -84,12 +84,12 @@ export default function ApplicationForm({ jobTitle, jobId }: { jobTitle: string;
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <label htmlFor="app-fullName" className={labelClass}>Full Name</label>
-          <input id="app-fullName" autoComplete="name" className={inputClass} placeholder="Jane Doe" {...register("fullName")} />
+          <input id="app-fullName" autoComplete="name" className={inputClass} placeholder="Nusrat Jahan" {...register("fullName")} />
           {errors.fullName && <p className={errorClass}>{errors.fullName.message}</p>}
         </div>
         <div>
           <label htmlFor="app-email" className={labelClass}>Email</label>
-          <input id="app-email" type="email" autoComplete="email" inputMode="email" className={inputClass} placeholder="jane@email.com" {...register("email")} />
+          <input id="app-email" type="email" autoComplete="email" inputMode="email" className={inputClass} placeholder="nusrat@email.com" {...register("email")} />
           {errors.email && <p className={errorClass}>{errors.email.message}</p>}
         </div>
       </div>

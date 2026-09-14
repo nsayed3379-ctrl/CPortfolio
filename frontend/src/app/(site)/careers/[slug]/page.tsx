@@ -145,10 +145,7 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
 
         <div>
           <div className="sticky top-24 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 sm:p-8">
-            <h2 className="text-lg font-medium text-[var(--color-paper)]">Apply for this role</h2>
-            <p className="mt-2 mb-6 text-sm text-[var(--color-muted)]">
-              We review every application personally. Expect a response within 24–48 hours.
-            </p>
+            <h2 className="mb-6 text-lg font-medium text-[var(--color-paper)]">Apply for this role</h2>
             <ApplicationForm jobTitle={job.title} jobId={jobId} />
           </div>
         </div>
