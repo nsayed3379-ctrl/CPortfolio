@@ -7,7 +7,7 @@
 export const SITE = {
   name: "VecoSoft",
   tagline: "Built for Scale. Engineered for Impact.",
-  email: "hello@vecosoft.com",
+  email: "info@vecosoft.com",
   location: "Dhaka, Bangladesh",
   // Canonical production origin — no trailing slash. Single source of truth
   // for metadataBase (layout.tsx) and the generated sitemap.xml/robots.txt

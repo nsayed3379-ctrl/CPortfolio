@@ -143,7 +143,7 @@ export default function ApplicationForm({ jobTitle, jobId }: { jobTitle: string;
       <label className="flex items-start gap-3 text-xs leading-relaxed text-[var(--color-muted)]">
         <input type="checkbox" className="focus-ring mt-0.5 h-5 w-5 shrink-0" {...register("consent")} />
         I agree that VecoSoft may store my application data to evaluate this role. I can request
-        deletion at any time by emailing hello@vecosoft.com.
+        deletion at any time by emailing info@vecosoft.com.
       </label>
       {errors.consent && <p className={errorClass}>{errors.consent.message}</p>}
 

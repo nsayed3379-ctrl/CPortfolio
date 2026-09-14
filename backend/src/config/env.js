@@ -42,8 +42,8 @@ module.exports = {
   // Where each form's notification email is sent — separate per form so
   // e.g. job applications can go straight to a hiring inbox.
   notify: {
-    contact: process.env.CONTACT_NOTIFY_EMAIL || "hello@vecosoft.com",
-    inquiry: process.env.INQUIRY_NOTIFY_EMAIL || "hello@vecosoft.com",
+    contact: process.env.CONTACT_NOTIFY_EMAIL || "info@vecosoft.com",
+    inquiry: process.env.INQUIRY_NOTIFY_EMAIL || "info@vecosoft.com",
     careers: process.env.CAREERS_NOTIFY_EMAIL || "careers@vecosoft.com",
   },
 };
