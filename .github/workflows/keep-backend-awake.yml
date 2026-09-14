@@ -1,0 +1,37 @@
+name: Keep Render backend awake
+
+# Render's free web-service tier spins the instance down after ~15 minutes
+# of inactivity, and the next real request pays a ~30-50s cold-start — long
+# enough to blow past a Vercel serverless function's own timeout (the
+# frontend's /api/* routes proxy to this backend), which can drop a
+# visitor's form submission (e.g. a job application's CV) before it ever
+# reaches the backend. Pinging a cheap, no-DB endpoint often enough keeps
+# the instance warm so that never happens.
+#
+# Setup: add a repository variable named RENDER_BACKEND_URL (Settings →
+# Secrets and variables → Actions → Variables) set to the backend's public
+# URL, e.g. https://cportfolio-backend.onrender.com (no trailing slash).
+# It's a plain public URL, not a secret, hence a "variable" not a "secret".
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend root (no DB query, just confirms the process is warm)
+        env:
+          BACKEND_URL: ${{ vars.RENDER_BACKEND_URL }}
+        run: |
+          if [ -z "$BACKEND_URL" ]; then
+            echo "::warning::RENDER_BACKEND_URL repository variable is not set — skipping ping. Set it under Settings > Secrets and variables > Actions > Variables."
+            exit 0
+          fi
+          if curl -sf --max-time 60 "$BACKEND_URL/" > /dev/null; then
+            echo "Backend responded — instance is warm."
+          else
+            echo "Ping failed or backend was cold-starting (this run's timeout is generous on purpose)."
+          fi
