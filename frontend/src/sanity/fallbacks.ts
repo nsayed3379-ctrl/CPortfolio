@@ -151,6 +151,8 @@ export function fallbackJobs(): JobDoc[] {
     location: j.location,
     type: j.type,
     experience: j.experience,
+    duration: j.duration,
+    stipend: j.stipend,
     tags: j.tags,
     about: j.about,
     responsibilities: j.responsibilities,

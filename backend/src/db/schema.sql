@@ -215,6 +215,8 @@ CREATE TABLE IF NOT EXISTS jobs (
   location          TEXT NOT NULL,
   type              TEXT NOT NULL, -- Full-time|Part-time|Contract|Internship
   experience        TEXT NOT NULL,
+  duration          TEXT, -- e.g. "2 months" — mainly relevant for internships
+  stipend           TEXT, -- e.g. "Unpaid", "৳15,000/month" — mainly relevant for internships
   tags              JSONB NOT NULL DEFAULT '[]'::jsonb, -- string[]
   about             TEXT NOT NULL,
   responsibilities  JSONB NOT NULL DEFAULT '[]'::jsonb, -- string[]
@@ -226,6 +228,11 @@ CREATE TABLE IF NOT EXISTS jobs (
   created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+-- CREATE TABLE IF NOT EXISTS is a no-op once the table already exists (this
+-- project's migrate.js just re-runs this whole file on every deploy), so a
+-- column added after initial launch needs an explicit ALTER TABLE too.
+ALTER TABLE jobs ADD COLUMN IF NOT EXISTS duration TEXT;
+ALTER TABLE jobs ADD COLUMN IF NOT EXISTS stipend TEXT;
 DROP TRIGGER IF EXISTS trg_jobs_updated ON jobs;
 CREATE TRIGGER trg_jobs_updated BEFORE UPDATE ON jobs
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();

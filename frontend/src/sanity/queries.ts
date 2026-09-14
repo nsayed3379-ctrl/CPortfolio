@@ -198,6 +198,8 @@ function toJob(r: any): JobDoc {
     location: r.location,
     type: r.type,
     experience: r.experience,
+    duration: r.duration ?? undefined,
+    stipend: r.stipend ?? undefined,
     tags: r.tags ?? [],
     about: r.about,
     responsibilities: r.responsibilities ?? [],

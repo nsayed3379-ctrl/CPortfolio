@@ -112,6 +112,10 @@ export type JobDoc = {
   location: string;
   type: string;
   experience: string;
+  /** e.g. "2 months" — mainly set for internships. */
+  duration?: string;
+  /** e.g. "Unpaid" or "৳15,000/month" — mainly set for internships. */
+  stipend?: string;
   tags?: string[];
   about: string;
   responsibilities: string[];

@@ -7,7 +7,7 @@ import { sanityFetch } from "@/sanity/fetch";
 import { JOB_BY_SLUG_QUERY } from "@/sanity/queries";
 import { fallbackJobBySlug } from "@/sanity/fallbacks";
 import type { JobDoc } from "@/sanity/types";
-import { MapPin, Briefcase, GraduationCap, Check } from "lucide-react";
+import { Briefcase, Check, Clock, GraduationCap, MapPin, Wallet, type LucideIcon } from "lucide-react";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -30,28 +30,82 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
 
   const responsibilities = job.responsibilities ?? [];
   const requirements = job.requirements ?? [];
+  const niceToHave = job.niceToHave ?? [];
+  const benefits = job.benefits ?? [];
+
+  // Quick-scan facts strip under the title — duration/stipend only appear
+  // when the job actually has them (mainly internships; a full-time role
+  // just shows location/type/experience).
+  const metaFacts: { icon: LucideIcon; label: string; value: string }[] = [
+    { icon: MapPin, label: "Location", value: job.location },
+    { icon: Briefcase, label: "Type", value: job.type },
+    { icon: GraduationCap, label: "Experience", value: job.experience },
+    ...(job.duration ? [{ icon: Clock, label: "Duration", value: job.duration }] : []),
+    ...(job.stipend ? [{ icon: Wallet, label: "Stipend", value: job.stipend }] : []),
+  ];
 
   return (
     <div className="py-14 sm:py-20">
       <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
         <div>
-          <h1 className="text-fluid-h1 font-medium text-[var(--color-paper)]">
+          <div className="flex flex-wrap items-center gap-3">
+            <Badge>{job.type}</Badge>
+            {job.deadline && (
+              <span className="text-xs text-[var(--color-muted-2)]">
+                Apply by{" "}
+                {new Date(job.deadline).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  timeZone: "UTC",
+                })}
+              </span>
+            )}
+          </div>
+
+          <h1 className="text-fluid-h1 mt-3 font-medium text-[var(--color-paper)]">
             {job.title}
           </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-[var(--color-muted)]">
-            <span className="flex items-center gap-1.5"><MapPin className="h-4 w-4" />{job.location}</span>
-            <span className="flex items-center gap-1.5"><Briefcase className="h-4 w-4" />{job.type}</span>
-            <span className="flex items-center gap-1.5"><GraduationCap className="h-4 w-4" />{job.experience}</span>
-          </div>
+
           {job.tags && job.tags.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-2">
               {job.tags.map((t) => <Badge key={t}>{t}</Badge>)}
             </div>
           )}
 
-          <p className="mt-8 text-base leading-relaxed text-[var(--color-muted)]">{job.about}</p>
+          <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:grid-cols-3 sm:p-6">
+            {metaFacts.map((f) => (
+              <div key={f.label} className="flex items-start gap-2.5">
+                <f.icon className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-cyan)]" />
+                <div className="min-w-0">
+                  <p className="text-xs text-[var(--color-muted-2)]">{f.label}</p>
+                  <p className="text-sm font-medium text-[var(--color-paper)]">{f.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
 
-          <div className="mt-10">
+          <section className="mt-10">
+            <Badge>Description</Badge>
+            <p className="mt-4 text-base leading-relaxed text-[var(--color-muted)]">{job.about}</p>
+          </section>
+
+          {benefits.length > 0 && (
+            <section className="mt-10">
+              <Badge>What you get</Badge>
+              <ul className="mt-4 space-y-3">
+                {benefits.map((b) => (
+                  <li key={b} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--color-cyan)]" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          <section className="mt-10">
+            <Badge>Responsibilities</Badge>
             <ul className="mt-4 space-y-3">
               {responsibilities.map((r) => (
                 <li key={r} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
@@ -60,9 +114,10 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          <div className="mt-10">
+          <section className="mt-10">
+            <Badge>Requirements</Badge>
             <ul className="mt-4 space-y-3">
               {requirements.map((r) => (
                 <li key={r} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
@@ -71,27 +126,20 @@ export default async function JobDetailPage({ params }: { params: Promise<{ slug
                 </li>
               ))}
             </ul>
-          </div>
+          </section>
 
-          {job.niceToHave && job.niceToHave.length > 0 && (
-            <div className="mt-10">
-            <ul className="mt-4 space-y-3">
-                {job.niceToHave.map((r) => (
+          {niceToHave.length > 0 && (
+            <section className="mt-10">
+              <Badge>Good to have (not required)</Badge>
+              <ul className="mt-4 space-y-3">
+                {niceToHave.map((r) => (
                   <li key={r} className="flex gap-3 text-sm leading-relaxed text-[var(--color-muted)]">
                     <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-muted-2)]" />
                     {r}
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-
-          {job.benefits && job.benefits.length > 0 && (
-            <div className="mt-10">
-            <div className="mt-4 flex flex-wrap gap-2">
-                {job.benefits.map((b) => <Badge key={b}>{b}</Badge>)}
-              </div>
-            </div>
+            </section>
           )}
         </div>
 

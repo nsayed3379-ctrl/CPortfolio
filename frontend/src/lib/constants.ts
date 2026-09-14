@@ -675,6 +675,8 @@ export type Job = {
   location: string;
   type: string;
   experience: string;
+  duration?: string;
+  stipend?: string;
   tags: string[];
   about: string;
   responsibilities: string[];
