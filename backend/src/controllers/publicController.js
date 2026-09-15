@@ -244,10 +244,13 @@ async function submitApplication(req, res) {
       <p><strong>Phone:</strong> ${escapeHtml(phone)}</p>
       ${linkedin ? `<p><strong>LinkedIn:</strong> <a href="${escapeHtml(linkedin)}">${escapeHtml(linkedin)}</a></p>` : ""}
       ${portfolio ? `<p><strong>Portfolio:</strong> <a href="${escapeHtml(portfolio)}">${escapeHtml(portfolio)}</a></p>` : ""}
-      <p><strong>CV:</strong> <a href="${cvAbsoluteUrl}">${cvAbsoluteUrl}</a></p>
+      <p><strong>CV:</strong> attached to this email (${escapeHtml(req.file.originalname)}). Link: <a href="${cvAbsoluteUrl}">${cvAbsoluteUrl}</a> — the link only works until the server's next redeploy, since uploaded files don't persist across deploys; the attachment is the reliable copy.</p>
       <p><strong>Cover letter:</strong><br>${escapeHtml(coverLetter).replace(/\n/g, "<br>")}</p>
       <hr><p>Reply directly to this email to respond to ${escapeHtml(fullName)}.</p>
     `,
+    attachments: [
+      { filename: req.file.originalname || "cv.pdf", path: req.file.path },
+    ],
   });
 
   res.status(201).json({ ok: true, id: rows[0].id });

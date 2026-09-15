@@ -32,14 +32,14 @@ function escapeHtml(value) {
 // Never throws — a mail failure must not take down the visitor-facing
 // request that triggered it (their submission is already safely in the
 // database by the time this is called).
-async function sendMail({ to, subject, html, text, replyTo }) {
+async function sendMail({ to, subject, html, text, replyTo, attachments }) {
   const t = getTransporter();
   if (!t) {
     console.warn(`[mailer] SMTP not configured — skipped email "${subject}" to ${to}`);
     return { sent: false, skipped: true };
   }
   try {
-    await t.sendMail({ from: env.smtp.from, to, subject, html, text, replyTo });
+    await t.sendMail({ from: env.smtp.from, to, subject, html, text, replyTo, attachments });
     return { sent: true };
   } catch (err) {
     console.error(`[mailer] failed to send "${subject}" to ${to}:`, err.message);
