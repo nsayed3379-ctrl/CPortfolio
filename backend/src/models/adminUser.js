@@ -24,4 +24,34 @@ async function create({ name, email, password, role = "admin" }) {
   return rows[0];
 }
 
-module.exports = { findByEmail, findById, verifyPassword, create };
+async function setResetToken(id, tokenHash, expiresAt) {
+  await query(
+    "UPDATE admin_users SET reset_token_hash = $1, reset_token_expires = $2 WHERE id = $3",
+    [tokenHash, expiresAt, id]
+  );
+}
+
+// Only matches a token that hasn't expired yet — an expired row is treated
+// exactly like no match, so the caller doesn't need a separate expiry check.
+async function findByValidResetTokenHash(tokenHash) {
+  const { rows } = await query(
+    "SELECT * FROM admin_users WHERE reset_token_hash = $1 AND reset_token_expires > now()",
+    [tokenHash]
+  );
+  return rows[0] || null;
+}
+
+// Clears the reset token in the same statement so it can't be reused —
+// a password reset link is single-use.
+async function resetPassword(id, password) {
+  const hash = await bcrypt.hash(password, 12);
+  await query(
+    "UPDATE admin_users SET password_hash = $1, reset_token_hash = NULL, reset_token_expires = NULL WHERE id = $2",
+    [hash, id]
+  );
+}
+
+module.exports = {
+  findByEmail, findById, verifyPassword, create,
+  setResetToken, findByValidResetTokenHash, resetPassword,
+};

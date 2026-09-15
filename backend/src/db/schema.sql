@@ -33,14 +33,20 @@ $$ LANGUAGE plpgsql;
 -- Admin users (replaces Sanity Studio / sanity.io project members)
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS admin_users (
-  id            SERIAL PRIMARY KEY,
-  name          TEXT NOT NULL,
-  email         TEXT NOT NULL UNIQUE,
-  password_hash TEXT NOT NULL,
-  role          TEXT NOT NULL DEFAULT 'admin', -- 'admin' | 'editor'
-  created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+  id                   SERIAL PRIMARY KEY,
+  name                 TEXT NOT NULL,
+  email                TEXT NOT NULL UNIQUE,
+  password_hash        TEXT NOT NULL,
+  role                 TEXT NOT NULL DEFAULT 'admin', -- 'admin' | 'editor'
+  reset_token_hash     TEXT,
+  reset_token_expires  TIMESTAMPTZ,
+  created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at           TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+-- CREATE TABLE IF NOT EXISTS is a no-op on an already-existing table, so
+-- columns added after the table's first deploy need an explicit ALTER here.
+ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS reset_token_hash TEXT;
+ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS reset_token_expires TIMESTAMPTZ;
 DROP TRIGGER IF EXISTS trg_admin_users_updated ON admin_users;
 CREATE TRIGGER trg_admin_users_updated BEFORE UPDATE ON admin_users
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();

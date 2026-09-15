@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
+const crypto = require("crypto");
 const asyncHandler = require("../utils/asyncHandler");
 const { resources } = require("../resources/resourceConfig");
 const genericModel = require("../models/genericModel");
@@ -9,6 +10,13 @@ const adminUserModel = require("../models/adminUser");
 const { issueToken, setAuthCookie, clearAuthCookie, requireAdminUI } = require("../middleware/auth");
 const { imageUpload, publicUrlFor, uploadRoot } = require("../middleware/upload");
 const { slugify } = require("../utils/slugify");
+const { sendMail, escapeHtml } = require("../utils/mailer");
+const env = require("../config/env");
+
+const RESET_TOKEN_TTL_MS = 60 * 60 * 1000; // 1 hour
+function hashToken(token) {
+  return crypto.createHash("sha256").update(token).digest("hex");
+}
 
 const router = express.Router();
 
@@ -26,7 +34,12 @@ function resourceOr404(req, res, next) {
 
 // ---------------------------------------------------------------- auth ----
 router.get("/login", (req, res) => {
-  res.render("admin/login", { title: "Admin login", error: null, layout: false });
+  res.render("admin/login", {
+    title: "Admin login",
+    error: null,
+    notice: req.query.reset ? "Password updated — sign in with your new password." : null,
+    layout: false,
+  });
 });
 
 router.post(
@@ -36,7 +49,7 @@ router.post(
     const user = await adminUserModel.findByEmail(email || "");
     const ok = user && (await adminUserModel.verifyPassword(user, password || ""));
     if (!ok) {
-      return res.status(401).render("admin/login", { title: "Admin login", error: "Invalid email or password.", layout: false });
+      return res.status(401).render("admin/login", { title: "Admin login", error: "Invalid email or password.", notice: null, layout: false });
     }
     const token = issueToken(user);
     setAuthCookie(res, token);
@@ -48,6 +61,76 @@ router.post("/logout", (req, res) => {
   clearAuthCookie(res);
   res.redirect("/admin/login");
 });
+
+router.get("/forgot-password", (req, res) => {
+  res.render("admin/forgotPassword", { title: "Forgot password", error: null, sent: false, layout: false });
+});
+
+router.post(
+  "/forgot-password",
+  asyncHandler(async (req, res) => {
+    const email = (req.body.email || "").trim();
+    const user = email && (await adminUserModel.findByEmail(email));
+    if (user) {
+      const rawToken = crypto.randomBytes(32).toString("hex");
+      const expires = new Date(Date.now() + RESET_TOKEN_TTL_MS);
+      await adminUserModel.setResetToken(user.id, hashToken(rawToken), expires);
+      const resetUrl = `${env.appUrl}/admin/reset-password/${rawToken}`;
+      await sendMail({
+        to: user.email,
+        subject: "Reset your VecoSoft admin password",
+        html: `
+          <p>Hi ${escapeHtml(user.name)},</p>
+          <p>We received a request to reset your VecoSoft admin password. This link expires in 1 hour:</p>
+          <p><a href="${resetUrl}">${resetUrl}</a></p>
+          <p>If you didn't request this, you can safely ignore this email — your password won't change.</p>
+        `,
+        text: `Reset your VecoSoft admin password (expires in 1 hour): ${resetUrl}`,
+      });
+    }
+    // Same response whether or not the email matched an account — otherwise
+    // this form could be used to check which emails have admin access.
+    res.render("admin/forgotPassword", { title: "Forgot password", error: null, sent: true, layout: false });
+  })
+);
+
+router.get(
+  "/reset-password/:token",
+  asyncHandler(async (req, res) => {
+    const user = await adminUserModel.findByValidResetTokenHash(hashToken(req.params.token));
+    if (!user) {
+      return res.render("admin/resetPassword", {
+        title: "Reset password", error: "This reset link is invalid or has expired.", token: null, layout: false,
+      });
+    }
+    res.render("admin/resetPassword", { title: "Reset password", error: null, token: req.params.token, layout: false });
+  })
+);
+
+router.post(
+  "/reset-password/:token",
+  asyncHandler(async (req, res) => {
+    const user = await adminUserModel.findByValidResetTokenHash(hashToken(req.params.token));
+    if (!user) {
+      return res.render("admin/resetPassword", {
+        title: "Reset password", error: "This reset link is invalid or has expired.", token: null, layout: false,
+      });
+    }
+    const { password, confirmPassword } = req.body;
+    if (!password || password.length < 8) {
+      return res.status(400).render("admin/resetPassword", {
+        title: "Reset password", error: "Password must be at least 8 characters.", token: req.params.token, layout: false,
+      });
+    }
+    if (password !== confirmPassword) {
+      return res.status(400).render("admin/resetPassword", {
+        title: "Reset password", error: "Passwords do not match.", token: req.params.token, layout: false,
+      });
+    }
+    await adminUserModel.resetPassword(user.id, password);
+    res.redirect("/admin/login?reset=1");
+  })
+);
 
 router.use(requireAdminUI);
 
